@@ -1,1 +1,115 @@
-[not done yet]
+***DO NOT PASTE THIS INTO TI-CONNECT, USE PURE_CODE FOR THAT***
+
+Lbl MU
+ClrHome
+
+**MENU**
+Menu("[>]WELCOME TO BASIC AI![<]","Continue to bot",BT,"Version history",VH,"Other info",IN,"DEBUG tool",DB
+
+Lbl BT
+Output(1,25,"=)"
+0→B:0→L
+
+**RESPONSES**
+"θhiθDecent, you?θ-blip-θ666θdieθno u, gotemθidcθLiterally nobody caresθhow about... no?θwElP tHeNθ[response]θu is foolθcommit 'sudo rm -rf'θcorrectθnopeθyEeT!θNANI?!?!θu done spamθCan u dont?θboiθblah blahθtyping theta breaks me XDθYESntθdont ping meθ[data reset]θi can b le very best?θ^when u make a typoθ^is gayθvxl-prsm.bandcamp.comθhmmmmθ°w°θ0o0 -really?-θr/wooshθ"
+
+Ans→Str0
+
+**CHAR MAP**
+"eEtTaAoOiInNsShHrRdDlLcCuUmMwWfFgGyYpPbBvVkKjJxXqQzZ!?0123456789/*-+(){}[].:, '^=≠>≥<≤π
+Ans→Str1
+DelVar ⌊AIIDelVar ⌊AIODelVar ⌊AIR
+SetUpEditor ⌊AII,⌊AIO,⌊AIR
+Output(1,25,"=<"
+While 1
+Output(1,25,"=}")
+
+**SPEED: RESPONSE DATABASE**
+If B=0:Then
+Disp "pls wait
+­3→E
+End
+If B≠length(Str0):Then
+Output(1,25,":3"
+For(A,L+1,length(Str0))
+If sub(Str0,A,1)="θ":Then
+1+B→B:A→⌊AIR(B):Output(2,25,B)
+End
+End
+If E=­3:Output(1,1,"all good
+Output(2,25,"  "
+End
+
+**YOUR INPUT**
+Output(1,25,":]"
+Input "",Str2
+Output(1,25,":L"
+
+**THIS IS "L2N", SEE README FOR MORE**
+0→T:0→O:length(Str0)→L
+For(A,1,length(Str2))
+For(W,1,length(Str1))
+If sub(Str2,A,1)=sub(Str1,W,1):Then
+W*A+T→T:length(Str1)→W
+End
+End
+Output(1,25,":O"
+
+**THIS IS "M2M", SEE README FOR MORE**
+For(W,1,dim(⌊AII))
+If T=⌊AII(W):Then
+⌊AIO(W)-1→O:dim(⌊AII)→W
+End
+End
+Output(1,25,"=["):randInt(1,B-1)→D:0→U:0→V:­1→E
+If O≠0:O→D
+
+**THIS IS THE RANDOMIZED MESSAGE CHOOSER**
+For(A,⌊AIR(D),length(Str0))
+If sub(Str0,A,1)="θ":Then
+1+E→E
+If E=0:Then
+A→U:Output(1,25,".[
+Else
+Output(1,25,":D"):A→V:abs(U-V)-1→V:U+1→U:length(Str0)→A
+End
+End
+End
+
+**MESSAGE OUTPUTTER**
+Output(1,25,"=P")
+Disp sub(Str0,U,V)
+Output(1,25,":>"
+
+**RNG BASED AI**
+If randInt(1,3)=1:Str0+Str2+"θ"→Str0
+Output(1,25,":l")
+If randInt(1,3)=1:Then
+T→⌊AII(dim(⌊AII)+1):D→⌊AIO(dim(⌊AIO)+1)
+End
+End
+End
+
+
+
+
+Lbl VH
+**VERSION HISTORY**
+Disp "[a] Basic learning, slow","[b] M2M Learning","[3] Speed improved","[4] More messages","[5] Menus and things","[6] Added DEBUG, TXT+","[7] Fixed M2M Bug, TXT+","[8] °/o LEARN +++","[9] M2M Fixed again"
+Output(10,24,"[>]
+Pause 
+ClrHome
+Disp "[A] TXTmap: Most common"
+Pause 
+Goto MU
+Lbl IN
+**APP INFO**
+Output(1,1,"BASIC AI v10"
+Output(2,1,"The -first- AI in BASIC!  Made in basic, for basic  Its actually fast too!    The faces are 'verbose'   this ai is really just rngbut it works :D"
+Output(10,1,"[C]2019 VoxelPrismatic"
+Pause 
+Goto MU
+Lbl DB
+**DEBUG APP**
+prgmBOTOUT
+Goto MU
