@@ -7,14 +7,14 @@ It is an RNG based bot, but it works because YOU are human!
 
 This program uses 3 strings, 3 lists, and many variables to make it work
 
-<VARS>
-  <STRINGS>
+  STRINGS
+  
     [str0] Responses. Broken up by "Θ", so don't respond with it, because the bot breaks.
     [str1] CharMap. Used for L2N (letter to number: encoding for M2M) and M2M (message to message: 1 response per input) 
     [str2] UrInput. Works with L2N so M2M can work
-  </STRINGS>
-  <LISTS>
+    
+  LISTS
+  
     [lAII] AI Input. The output for L2N
     [lAIO] AI Output. Response IDs linked with L2N to provide M2M
     [lAIR] AI Responses. The location list for "Θ" to greatly increase speed
-  </LISTS>
