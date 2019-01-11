@@ -6,7 +6,9 @@ This is my code, so please don't steal it and say that it's your own.
 Feel free to use it as long as you put credit somewhere (unless your uploading to calc). Thanks!
 
 Anyway I used the TI-84CSE to program this bot. 
+
 It is an RNG based bot, but it works because YOU are human! 
+
 ^that means you try to make sense of the conversation
 
 This program uses 3 strings, 3 lists, and many variables to make it work
