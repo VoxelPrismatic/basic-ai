@@ -13,6 +13,10 @@ It is an RNG based bot, but it works because YOU are human!
 
 This program uses 3 strings, 3 lists, and many variables to make it work
 
+There is one thing to note: The TI CONNECT CE software breaks the program on first run. Please use alpha11 (or later) unless you know how to program in BASIC 
+
+     The CharMap (looks like "eE...") needs to be retyped by hand, also the DelVar commands need to be redone. This is a compatability issue and cannot be fixed via software :(
+     
   STRINGS
   
     [str0] Responses. Broken up by "Θ", so don't respond with it, because the bot breaks.
