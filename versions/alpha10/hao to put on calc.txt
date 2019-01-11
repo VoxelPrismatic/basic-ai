@@ -6,5 +6,5 @@ Upload the files
 
 **COMPATIBLE VERSIONS**
 Any calculator running TI84 software 4.2 and up
-Includes: TI84+CSE and TI84+CE, no older, sry fam
+Includes: TI84+CSE and TI84+CE, no older, no "NSpire", sry fam
 Also only works on TI Calculators, Casio fans im sry. 
