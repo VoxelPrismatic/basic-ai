@@ -9,7 +9,9 @@ Output(1,25,"=)"
 Ans→Str0
 "eEtTaAoOiInNsShHrRdDlLcCuUmMwWfFgGyYpPbBvVkKjJxXqQzZ!?0123456789/*-+(){}[].:, '^=≠>≥<≤π
 Ans→Str1
-DelVar ⌊AIIDelVar ⌊AIODelVar ⌊AIR
+DelVar ⌊AII
+DelVar ⌊AIO
+DelVar ⌊AIR
 SetUpEditor ⌊AII,⌊AIO,⌊AIR
 Output(1,25,"=<"
 While 1
