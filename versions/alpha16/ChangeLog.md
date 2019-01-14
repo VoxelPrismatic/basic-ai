@@ -10,7 +10,7 @@ First question:
           [a] User is now seperated from AI 
           [b] User: "]*message*" System: ">*message*" AntiBreak: "}*string*"
      [3] Other things
-          [a] L2N module is reduced in size
+          [a] L2N module has greatly increased speed (for character repeats
           [b] Added AutoClean for storage space stuff
 
 Second question: 
