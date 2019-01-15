@@ -1,4 +1,6 @@
-# basic-ai
+# BASIC AI VERSION "ALPHA 16"
+**Status: `[BUILD|AWESOME]`**
+
 AI made in Texas instruments TI83 BASIC
 
 This is my code, so please don't steal it and say that it's your own.
