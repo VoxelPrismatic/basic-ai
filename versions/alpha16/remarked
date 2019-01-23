@@ -1,15 +1,20 @@
 Lbl MU
 ClrHome
 
+**MENU
 Menu("[>]WELCOME TO BASIC AI![<]","Continue to bot",BT,"BASIC AI Info",IN,"System commands",FU
 Lbl BT
 
 Output(1,25,"=)")
+
+**MESSAGE
 "θhiθDecent, you?θ-blip-θ666θdieθno u, gotemθidcθLiterally nobody caresθhow about... no?θwElP tHeNθ[response]θu is foolθcommit 'sudo rm -rf'θcorrectθnopeθyEeT!θNANI?!?!θu done spamθCan u dont?θboiθblah blahθtyping theta breaks me XDθYESntθdont ping meθ[data reset]θi can b le very best?θ^when u make a typoθ^is gayθvxl-prsm.bandcamp.comθhmmmmθ°w°θ0o0 -really?-θr/wooshθ9+10=21θ"
 
 Ans→Str0:0→B:0→L
 
 Output(1,25,"=B")
+
+**CHAR MAP
 "etaoi!nshrdl cumwf/gypbv)kjxqzETAOI?NSHRDL.CUMWF,GYPBV(KJXQZ76580:92431/*-+{}[]^=v><≠≥≤π→Str1
 
 Output(1,25,"=D")
@@ -22,6 +27,7 @@ While 1
 
 Output(1,25,"=}")
 
+**MESSAGE FIND
 If B=0:­3→E
 If B≠length(Str0):Then
 Output(1,25,":3"
@@ -37,6 +43,7 @@ Input "]",Str2
 
 Output(1,25,":°"
 
+**MATH MODULE
 If Str2="[*>":Then
 0→B:0→L
 End
@@ -57,6 +64,7 @@ Y₀→A
 Disp A
 End:End:End
 
+**ECHO MODULE
 If Str2="[=>":Then
 Repeat W
 Input "[=>",Str2
@@ -66,17 +74,20 @@ Else
 Disp Str2
 End:End:End
 
+**ANTIBREAK FROM EXIT MODULE MODULE
 If Str2="[/>":Then
 "botto!!!"→Str2
 Disp "}"+Str2
 End
 
+**ANTIBREAK LENGTH MODULE
 Output(1,25,":U")
 If length(Str2)>25:Then
 sub(Str2,1,25)→Str2
 Disp ">LNG less than 26 pls, thx","}"+Str2
 End
 
+**ANTIBREAK THETA MODULE
 Output(1,25,":I")
 " "→Str3:0→W
 For(A,1,length(Str2))
@@ -95,9 +106,11 @@ sub(Str3,2,length(Str3)-1)→Str2
 Disp "}"+Str2
 End
 
+
 Output(1,25,":L"
 0→T:0→O:length(Str0)→L:1→Z:1→D
 
+**L2N MODULE
 For(A,1,length(Str2)-1)
 If sub(Str2,A+1,1)=sub(Str2,Z,1):Then
 1+D→D
@@ -108,29 +121,37 @@ If sub(Str2,A,1)=sub(Str1,QW,1):Then
 DQ*W*A+T→T:30→W:3→Q:1→D:A+1→Z
 End:End:End:End:End
 
+**M2M MODULE
 Output(1,25,":O")
 For(W,1,dim(⌊AII))
 If T=⌊AII(W):Then
 ⌊AIO(W)-1→O:dim(⌊AII)→W
 End:End
 
+**MESSAGE SELECT
 Output(1,25,"=P"):randInt(1,B-1)→D
 Disp sub(Str0,⌊AIR(D)+1,⌊AIR(D+1)-⌊AIR(D)-1)
 
+**MESSAGE ADD
 Output(1,25,":>")
 If randInt(1,3)=1:Str0+Str2+"θ"→Str0
 
+**MESSAGE M2M
 Output(1,25,":F")
 If randInt(1,3)=1:Then
 T→⌊AII(dim(⌊AII)+1):D→⌊AIO(dim(⌊AIO)+1)
 End
 
 Output(1,25,":V"
+
+**SPACE CLEAN
 DelVar A
 DelVar D
 DelVar W
 DelVar Z
 DelVar Str3
+
+**BUNCH OF ENDS IN CASE SOMETHING GOES WRONG
 End:End:End:End:End:End:End:End:End:End:End:End
 
 
