@@ -10,5 +10,6 @@ If it is a virus, then it cannot be read.
 
 Download the TI Connect (with editing) software:
       
-   [WIN] https://education.ti.com/en/software/details/en/13312F7CEC074A2DAFD7EE5646129839/swticonnectcesoftwareforwindows
-   [MAC] https://education.ti.com/en/software/details/en/68CEDD34FDC94622B4DBD173E6A0D8C3/swticonnectcesoftwareformacintosh
+   [[WIN](https://education.ti.com/en/software/details/en/13312F7CEC074A2DAFD7EE5646129839/swticonnectcesoftwareforwindows)]
+   
+   [[MAC](https://education.ti.com/en/software/details/en/68CEDD34FDC94622B4DBD173E6A0D8C3/swticonnectcesoftwareformacintosh)]
