@@ -1,0 +1,166 @@
+Lbl MU
+ClrHome
+
+Menu("[>]WELCOME TO BASIC AI![<]","Continue to bot",BT,"BASIC AI Info",IN,"System commands",FU
+Lbl BT
+
+Output(1,25,"=)")
+"θhiθDecent, you?θ-blip-θ666θdieθno u, gotemθidcθLiterally nobody caresθhow about... no?θwElP tHeNθ[response]θu is foolθcommit 'sudo rm -rf'θcorrectθnopeθyEeT!θNANI?!?!θu done spamθCan u dont?θboiθblah blahθtyping theta breaks me XDθYESntθdont ping meθ[data reset]θi can b le very best?θ^when u make a typoθ^is gayθvxl-prsm.bandcamp.comθhmmmmθ°w°θ0o0 -really?-θr/wooshθ9+10=21θ"
+
+Ans→Str0:0→B:0→L
+
+Output(1,25,"=B")
+"etaoi!nshrdl cumwf/gypbv)kjxqzETAOI?NSHRDL.CUMWF,GYPBV(KJXQZ76580:92431/*-+{}[]^=v><≠≥≤π→Str1
+
+Output(1,25,"=D")
+DelVar ⌊AII
+DelVar ⌊AIO
+DelVar ⌊AIR
+SetUpEditor ⌊AII,⌊AIO,⌊AIR
+
+While 1
+
+Output(1,25,"=}")
+
+If B=0:­3→E
+If B≠length(Str0):Then
+Output(1,25,":3"
+For(A,L+1,length(Str0))
+If sub(Str0,A,1)="θ":Then
+1+B→B:A→⌊AIR(B):Output(10,25,B):A+1→A
+End:End
+Output(10,25,"  ")
+End
+
+Output(1,25,":]")
+Input "]",Str2
+
+Output(1,25,":°"
+
+If Str2="[*>":Then
+0→B:0→L
+End
+
+If Str2="[->":Stop
+
+If Str2="[+>":Then
+0→W
+Repeat W
+Output(1,25,":°"
+Input "[+>",Str2
+Output(1,25,":"
+If Str2="[/>":Then
+­100→W
+Else
+StringEqu(Str2,Y₀)
+Y₀→A
+Disp A
+End:End:End
+
+If Str2="[=>":Then
+Repeat W
+Input "[=>",Str2
+If Str2="[/>":Then
+­100→W
+Else
+Disp Str2
+End:End:End
+
+If Str2="[/>":Then
+"botto!!!"→Str2
+Disp "}"+Str2
+End
+
+Output(1,25,":U")
+If length(Str2)>25:Then
+sub(Str2,1,25)→Str2
+Disp ">LNG less than 26 pls, thx","}"+Str2
+End
+
+Output(1,25,":I")
+" "→Str3:0→W
+For(A,1,length(Str2))
+If sub(Str2,A,1)="θ":Then
+W+1→W
+If W=1:Disp ">typing 'θ' no more breaky"
+If W≠length(Str2):Then
+Str3+sub(Str2,A,1)→Str3
+Else
+"not theta"→Str2
+Disp "}"+Str2
+0→W
+End:End:End
+If W≠0:Then
+sub(Str3,2,length(Str3)-1)→Str2
+Disp "}"+Str2
+End
+
+Output(1,25,":
+If sub(Str2,1,1)=" ":Then
+For(A,1,length(Str2))
+If sub(Str2,A,1)≠" ":Then
+If A=length(Str2):Then
+"human failed to break me"→Str2
+Disp "}"+Str2
+Else
+sub(Str2,A,length(Str2)-A+1)→Str2
+End:Else
+If A=1:Disp ">Dont start blank"
+End:End:End
+
+
+
+
+
+Output(1,25,":L"
+0→T:0→O:length(Str0)→L:1→Z:1→D
+
+For(A,1,length(Str2)-1)
+If sub(Str2,A+1,1)=sub(Str2,Z,1):Then
+1+D→D
+Else
+For(W,1,30)
+For(Q,1,3)
+If sub(Str2,A,1)=sub(Str1,QW,1):Then
+DQ*W*A+T→T:30→W:3→Q:1→D:A+1→Z
+End:End:End:End:End
+
+Output(1,25,":O")
+For(W,1,dim(⌊AII))
+If T=⌊AII(W):Then
+⌊AIO(W)-1→O:dim(⌊AII)→W
+End:End
+
+Output(1,25,"=P"):randInt(1,B-1)→D
+Disp sub(Str0,⌊AIR(D)+1,⌊AIR(D+1)-⌊AIR(D)-1)
+
+Output(1,25,":>")
+If randInt(1,3)=1:Str0+Str2+"θ"→Str0
+
+Output(1,25,":F")
+If randInt(1,3)=1:Then
+T→⌊AII(dim(⌊AII)+1):D→⌊AIO(dim(⌊AIO)+1)
+End
+
+Output(1,25,":V"
+DelVar A
+DelVar D
+DelVar W
+DelVar Z
+DelVar Str3
+End:End:End:End:End:End:End:End:End:End:End:End
+
+
+
+
+Lbl IN
+Output(1,1,"BASIC AI vA-17"
+Output(2,1,"The -first- AI in BASIC!  Made in basic, for basic  Its actually fast too!    The faces are 'verbose'   this ai is really just rngbut it works :D           "
+Output(10,1,"[C]2019 VoxelPrismatic"
+Pause
+Goto MU
+Lbl FU
+Disp "[+> - Enter calc mode","[=> - Echo message","[-> - Exit AI","[/> - Go back to AI"
+Pause
+
+Goto MU
