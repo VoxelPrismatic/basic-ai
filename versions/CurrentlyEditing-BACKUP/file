@@ -99,14 +99,13 @@ Output(1,25,":
 If sub(Str2,1,1)=" ":Then
 For(A,1,length(Str2))
 If sub(Str2,A,1)≠" ":Then
+sub(Str2,A,length(Str2)-A+1)→Str2
+Else
+If A=1:Disp ">Dont start blank"
 If A=length(Str2):Then
 "human failed to break me"→Str2
 Disp "}"+Str2
-Else
-sub(Str2,A,length(Str2)-A+1)→Str2
-End:Else
-If A=1:Disp ">Dont start blank"
-End:End:End
+End:End:End:End
 
 
 
