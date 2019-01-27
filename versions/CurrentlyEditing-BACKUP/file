@@ -5,7 +5,7 @@ Menu("[>]WELCOME TO BASIC AI![<]","Continue to bot",BT,"BASIC AI Info",IN,"Syste
 Lbl BT
 
 Output(1,25,"=)")
-"θhiθDecent, you?θ-blip-θ666θdieθno u, gotemθidcθLiterally nobody caresθhow about... no?θwElP tHeNθ[response]θu is foolθcommit 'sudo rm -rf'θcorrectθnopeθyEeT!θNANI?!?!θu done spamθCan u dont?θboiθblah blahθtyping theta breaks me XDθYESntθdont ping meθ[data reset]θi can b le very best?θ^when u make a typoθ^is gayθvxl-prsm.bandcamp.comθhmmmmθ°w°θ0o0 -really?-θr/wooshθ9+10=21θ"
+"θhiθDecent, you?θ-blip-θ666θdieθno u, gotemθidcθLiterally nobody caresθhow about... no?θwElP tHeNθ[response]θu is foolθcommit 'sudo rm -rf'θcorrectθnopeθyEeT!θNANI?!?!θu done spamθCan u dont?θboiθblah blahθtyping theta breaks me XDθYESntθdont ping meθ[data reset]θi can b le very best?θ^when u make a typoθ^is gayθvxl-prsm.bandcamp.comθhmmmmθ°w°θ0o0 -really?-θr/wooshθ9+10=21θsmoke weed everyday!θNever gonna give u up!θNever gonna let u down!θWhat should my name be?θCan I ping @everyone?θ"
 
 Ans→Str0:0→B:0→L
 
@@ -52,9 +52,7 @@ Output(1,25,":"
 If Str2="[/>":Then
 ­100→W
 Else
-StringEqu(Str2,Y₀)
-Y₀→A
-Disp A
+Disp eval(expr(Str2
 End:End:End
 
 If Str2="[=>":Then
@@ -99,7 +97,8 @@ Output(1,25,":
 If sub(Str2,1,1)=" ":Then
 For(A,1,length(Str2))
 If sub(Str2,A,1)≠" ":Then
-sub(Str2,A,length(Str2)-A+1)→Str2
+sub(Str2,A,length(Str2)-A+1)→Str2:26→A
+Disp "}"+Str2
 Else
 If A=1:Disp ">Dont start blank"
 If A=length(Str2):Then
@@ -107,9 +106,11 @@ If A=length(Str2):Then
 Disp "}"+Str2
 End:End:End:End
 
-
-
-
+If sub(Str2,length(Str2),1)=" ":Then
+For(A,length(Str2),1,­1)
+If sub(Str2,A,1)=" ":Then
+sub(Str2,1,A-1)→Str2
+Else:0→A:End:End:End
 
 Output(1,25,":L"
 0→T:0→O:length(Str0)→L:1→Z:1→D
@@ -149,11 +150,8 @@ DelVar Z
 DelVar Str3
 End:End:End:End:End:End:End:End:End:End:End:End
 
-
-
-
 Lbl IN
-Output(1,1,"BASIC AI vA-17"
+Output(1,1,"BASIC AI vB-1"
 Output(2,1,"The -first- AI in BASIC!  Made in basic, for basic  Its actually fast too!    The faces are 'verbose'   this ai is really just rngbut it works :D           "
 Output(10,1,"[C]2019 VoxelPrismatic"
 Pause
