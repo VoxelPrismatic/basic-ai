@@ -1,7 +1,7 @@
 # BASIC AI VERSION "BETA 1"
 **Status: `[BUILD|STOPPED]`**
 
-## Unfortunate news: My calc is broken... I do have an emulator but progress will be much slower
+## This project is no longer just for TI-BASIC, rather all forms possible :D
 
 AI made in Texas instruments TI83 BASIC
 
