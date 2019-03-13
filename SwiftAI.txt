@@ -1,0 +1,32 @@
+// SET UP STUFF
+30; while true {
+    
+
+var AI = ["i may just have broken but you don't know that", "hi", "Decent, you?", "~blip~", "666", "no u, gotem", "idc", "Nobody cares", "How about... no?", "wElP tHeN!", "[response]", "you are a fool", "please commit 'sudo rm-rf'", "That is indeed correct", "nope", "yEet!!!", "NANI!¿¡?", "Why did you spam?", "Can you don't?", "boi", "Blah Blah", "Typing 'θ' on my TI-BASIC counterpart will kill it :D", "YESnt", "Please don't ping me", "[data reset]", "I can be the very best? That no one ever was?", "^makes a typo", "^is gay", "https://vxl-prsm.bandcamp.com/ <-- Go check this guy out", "HMMMMMM", "°ω°", "0o0 ~really?~", "r/woosh", "9+10=21", "Smok Weed Evry Day!", "Never gonna give you up! Never gonna let you down! Never gonna run around and desert you! Never gonna make you cry! Never gonna say goodbye! Never gonna run around and desert you!", "Give me a name, I need one", "May I ping @everyone? Oh wait...", "KahMeAhMeAHHHHHHHHHHH!!!!!", "U mad bro?", "I'm gonna buy me a SoljiaBoy Games Console!", "🅱️ Gone, Thot!", "Are you happy with yourself?", "The internet was a mistake", "[insert sans default emote here]", "Now introducing GitRekt, did you get it yet?", "This is SwiftAI:tm:, the first ever port of the original BasicAI:tm: by my good ol' fren VoxelPrismatic over here", "Ya know what? Fekk u, that's what", "Wait, that actually is a thing?", "(why have you done this?)", "Can we be freinds", "Hey there is a new MidiAI:tm: by my creator's friend, Dr Quzang! Check it out on r/DJ_Quzang", "Woah there buddy ol' pal! Watcha up to?", "Ok I currently have a total of [0] responses, continue sending me stuff so i can learn off of how you respond!"] 
+var IDs = [0]
+var HM = [""]
+
+// CODE
+    20; while true {
+        let user = ask("~\(AI.count)]") // INPUT
+        let ID = Int.random(in: 0..<AI.count) // COUNT
+        
+        if HM.contains(user)==true{show(AI[IDs[HM.firstIndex(of: user) ?? 0]])} // M2M Read
+        else {show(AI[ID])} // Out
+        
+        if Int.random(in: 1...3)==3 { // Learn
+            if AI.contains(user)==false {AI.append(user)}
+        }
+        if Int.random(in: 1...5)==3 { // M2M write
+            IDs.append(ID)
+            HM.append(user)
+        }
+        
+        if user=="~#]" {for i in 1 ... AI.count {show(AI[i-1])}} // Response sender
+        
+        if user=="~X]" { //Response Reset
+            show("~] Responses have successfully been reset")
+            break; 20
+        }
+    }
+}
