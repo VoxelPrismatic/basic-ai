@@ -1,8 +1,10 @@
-# BASIC AI VERSION "BETA 1"
-**Status: `[BUILD|STOPPED]`**
+# RNG BASED AI
+**Status: `[BUILD|ONGOING]`**
 
 ## This project is no longer just for TI-BASIC, rather all forms possible :D
+## For support and other stuff, join my discord server here: [[DISCORD]](https://discord.gg/Z84Nm6n)
 
+# TI-BASIC AI
 AI made in Texas instruments TI83 BASIC
 
 This is my code, so please don't steal it and say that it's your own.
@@ -37,3 +39,14 @@ There is one thing to note: The TI CONNECT CE software breaks the program on fir
 If ypu want to learn how to do this, please visit [this site](http://tibasicdev.wikidot.com/home) to learn more :)
 
 FYI, my program isn't on there. I am independent from that site, other than me using it to learn.
+
+# SWIFT AI
+A very bad version of the Basic AI, although it uses basically the same stuff.
+
+However, because I can use collections, AntiBreak is not included in this version
+
+To use this version, please download Swift Playgrounds here: [[iOS]](https://itunes.apple.com/us/app/swift-playgrounds/id908519492?mt=8) [[Android]](https://android-apk.net/app/swift-playgrounds/908519492/)(report as an issue if this one is unsafe)
+
+# PYTHON AI
+
+A Discord version of the same SwiftAI
