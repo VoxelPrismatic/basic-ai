@@ -47,6 +47,8 @@ However, because I can use collections, AntiBreak is not included in this versio
 
 To use this version, please download Swift Playgrounds here: [[iOS]](https://itunes.apple.com/us/app/swift-playgrounds/id908519492?mt=8) [[Android]](https://android-apk.net/app/swift-playgrounds/908519492/)(report as an issue if this one is unsafe)
 
-# PYTHON AI
+# PYTHON-LINUX AI
 
 A Discord version of the same SwiftAI
+
+This version runs on linux, so there is a few things you need to do every time you start it up (notes are in the file)
