@@ -45,6 +45,8 @@ A very bad version of the Basic AI, although it uses basically the same stuff.
 
 However, because I can use collections, AntiBreak is not included in this version
 
+When using this version, be sure to load the **Answers** template, otherwise some errors will show up even though nothing is wrong
+
 To use this version, please download Swift Playgrounds here: [[iOS]](https://itunes.apple.com/us/app/swift-playgrounds/id908519492?mt=8) [[Android]](https://android-apk.net/app/swift-playgrounds/908519492/)(report as an issue if this one is unsafe)
 
 # PYTHON-LINUX AI
