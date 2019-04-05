@@ -50,7 +50,7 @@ Once you have chosen a folder to keep the program in, be sure to do the above im
 
 Then proceed to make the following text files, yes the names are important:
      
-     `PrismaticText` // `PrismaticM2M-R` // `PrismaticM2M-C` // `MathIn` // `MathOut` // `SciIn` // `SciOut` // `EngIn` // `EngOut`
+`PrismaticText` // `PrismaticM2M-R` // `PrismaticM2M-C` // `MathIn` // `MathOut` // `SciIn` // `SciOut` // `EngIn` // `EngOut`
 
 Those text files represent seperate arrays, making it easy to see which stuff it learned
 
