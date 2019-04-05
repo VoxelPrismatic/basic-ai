@@ -54,3 +54,5 @@ To use this version, please download Swift Playgrounds here: [[iOS]](https://itu
 A Discord version of the same SwiftAI
 
 This version runs on linux, so there is a few things you need to do every time you start it up (notes are in the file)
+
+To use the latest version of the file, you must use `discord.py REWRITE` and `Python v3.7.x`, because of this line of code: `asyncio.ensure_future(...)` (introduced in Py3.7)
