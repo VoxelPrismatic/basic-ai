@@ -1,7 +1,7 @@
 # Requirements
 ## All versions of this code is run on Linux, but also can be run on all OSs with minor modification
 
-### Version 6
+### Version 6, 6a, 6b
 Modifications:
      
      Windows: `py -3.7` instead of `python3.7`
