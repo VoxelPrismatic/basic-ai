@@ -277,12 +277,10 @@ async def ping(ctx):
 
 @bot.command()
 async def slots(ctx):
-    print('slot')
     slot = ["[X]","[Y]","[Z]","[1]","[2]","[3]","[0]","[V]","[U]","[@]","[%]","[#]"]
-    slot1 = random.randint(len(slot)-1)
-    slot2 = random.randint(len(slot)-1)
-    slot3 = random.randint(len(slot)-1)
-    print('slot')
+    slot1 = random.randint(0,len(slot)-1)
+    slot2 = random.randint(0,len(slot)-1)
+    slot3 = random.randint(0,len(slot)-1)
     if slot1 == slot2 or slot1 == slot3 or slot2 == slot3:
         await ctx.send(f'```diff\n-] {slot[slot1-1]}{slot[slot2-1]}{slot[slot3-1]}\n+]>{slot[slot1]}{slot[slot2]}{slot[slot3]}<\n-] {slot[slot1+1]}{slot[slot2+1]}{slot[slot3+1]}\n \n-] WIN!```')
     else:
@@ -338,7 +336,7 @@ async def ban(ctx, members: commands.Greedy[discord.Member],
         await member.ban(delete_message_days=delete_days, reason=reason)
 
 @bot.command()
-async def usrinfo(ctx):
+async def usrinfo(ctx): #DOESNT WORK
     await ctx.send(f'```USER // {user.name}\nNICK // {user.display_name}\nJOINED // {member.joined_at}\nCREATED // {user.created_at}\nDISCRIM // {user.discriminator}\nUSER ID // {user.id}```')
     await ctx.send(f'```ROLES // {[role.name.replace("@", "") for role in user.roles]}\nSTATUS // {user.status}\nUSER PFP // {user.avatar_url}```')
 
