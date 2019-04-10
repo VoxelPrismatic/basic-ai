@@ -2,6 +2,6 @@
 @bot.command()
 @commands.is_owner()
 async def pwr():
-  await bot.logout()
-  await bot.close()
-  bot.aiosession.close()
+    await bot.logout()
+    await bot.close()
+    bot.aiosession.close()
