@@ -152,9 +152,7 @@ async def on_message(message):
                                 store = message.content+'\n'
                                 words = message.content.split(" ")
                                 HAS = PMath = PEng = PSci = 0
-                                MATHl = await LoadNow('MathIn')
-                                ENGl = await LoadNow('EngIn')
-                                SCIl = await LoadNow('SciIn')
+                                MATHl, ENGl, SCIl = await LoadNow('MathIn'), await LoadNow('EngIn'), await LoadNow('SciIn')
                                 print(f"{MATHl}\n{ENGl}\n{SCIl}")
                                 for word in words:
                                     for math in MATHl:
