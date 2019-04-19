@@ -9,6 +9,7 @@
 #-----------------
 
 ##/// STARTUP
+print('IMPORTING')
 import logging
 import discord
 import random
@@ -22,17 +23,28 @@ import queue
 import typing
 import sysconfig
 import platform
+import ast
+import io
+import shlex
+import matplotlib.pyplot as pyplt
+import numpy as np
+import numexpr as ne
+from ast import literal_eval
 from discord.ext import commands
+from shlex import quote
 from discord.ext.commands import Bot
 from discord.ext.commands import has_permissions
 from discord.ext.commands import MissingPermissions
 from discord.voice_client import VoiceClient
+print('DONE\nINITIALIZING')
 bot = commands.Bot(command_prefix=";]")
 bot.remove_command("help")
 logging.basicConfig(level='INFO')
 client = discord.Client()
 flist = ""
-BAN = ["nigger","nig","faggot","fag","cunt","kike"]
+BAN = ["idontfuckingcarejustno"]
+
+print('DEFINING')
 
 def FilesLoad(rw): #// Making life easy when the actual code comes
     global PrizM2MR, PrizM2MC, PrizTXT, PrizMATHl, PrizSCIl, PrizENGl, PrizMATHr, PrizSCIr, PrizENGr #Or this wont work at all
@@ -96,7 +108,7 @@ async def exc(ctx, code: int):
     elif code == 2: await ctx.send('```diff\n-]ERROR 403\n=]ALL FORBIDDEN```')
     elif code == 3: await ctx.send('```diff\n-]ERROR 404\n=]ALL NOT FOUND```')
 
-
+print('DONE')
 
 ##/// OUTPUT
 @bot.listen()
@@ -104,7 +116,7 @@ async def on_ready():
     print('\n \n \n \n',bot.guilds,'\n',*[bot.get_all_channels()],'\n \n \nGG! !] PRIZ AI ;] [! // v',discord.__version__,'// RESTART - CTRL Z, [up], [enter]\n \n \n')
     channel = bot.get_channel(556247032701124650)
     await channel.purge(limit=1)
-    await channel.send(f'```diff\n+] I\'m back online, boiz!\n-] However, due to testing, I may be offline very shortly\n+] Turned on: {str(datetime.datetime.now())}\n-] Turns Off at 9PM CST```')
+    await channel.send(f'```md\n#] I\'m back online, boiz!\n> However, due to testing, I may be offline very shortly\n> Turned on: {str(datetime.datetime.now())}\n#] Turns Off at 9PM CST```')
     await bot.change_presence(activity=discord.Game(name='with Prisms and Voxels :D',url='https://discord.gg/Z84Nm6n'))
     channel = 561673143996121116
     print(time.time())
@@ -265,7 +277,8 @@ async def hlep(ctx):
 > Slot machine :D
 ] ";]coin {x}"
 > Flips a virtual coin {x} times 0.0 [{x} is optional]
-] ";]git"
+] ";]git"    await channel.send(f'```diff\n+] I\'m back online, boiz!\n-] However, due to testing, I may be offline very shortly\n+] Turned on: {str(datetime.datetime.now())}\n-] Turns Off at 9PM CST```')
+
 > Shows the github/gitlab repo ;]
 ] ";]rng {x} {y}"
 > Prints a random number from {x} to {y}, {z} number of times (optional)
@@ -350,7 +363,7 @@ async def slots(ctx):
     except discord.NotFound: await exc(ctx, 3)
 
 @bot.command()
-async def coin(ctx, *nums):
+async def coin(ctx, *nums: int):
     try:
         if len(nums) == 0:
             num = 1
@@ -423,7 +436,7 @@ async def clr0(ctx, arg: int):
     except discord.NotFound: await exc(ctx, 3)
 
 @bot.command()
-async def rng(ctx, rngl: int, rngh: int, *nums):
+async def rng(ctx, rngl: int, rngh: int, *nums: int):
     try:
         if len(nums) == 0:
             num = 1
@@ -445,6 +458,8 @@ async def rng(ctx, rngl: int, rngh: int, *nums):
             else:
                 await ctx.send(f'```{send}```')
                 send = ""
+                send += f'{temp} '
+                ttl.append(temp)
         if len(send) != 0: await ctx.send(f'```{send}```')
         await ctx.send(f'```CNT // {len(ttl)}\nAVG // {sum(ttl)/len(ttl)}\nRNG // {max(ttl)-min(ttl)}```')
     except discord.HTTPException: await exc(ctx, 1)
@@ -477,6 +492,7 @@ async def usrinfo(ctx):
 @has_permissions(manage_roles=True, kick_members=True)
 async def kick(self, *members: discord.Member):
     for member in members:
+        member = quote(member)
         try:
             await self.bot.kick(member)
         except discord.HTTPException: await exc(ctx, 1)
@@ -485,7 +501,7 @@ async def kick(self, *members: discord.Member):
 
 @bot.command()
 @commands.has_permissions(manage_messages=True)
-async def clrin(ctx, int1: int, Int2: int):
+async def clrin(ctx, int1: int, int2: int):
     try:
         clrh = min(int1, int2)
         clrl = max(int1, int2)
@@ -496,7 +512,7 @@ async def clrin(ctx, int1: int, Int2: int):
 
 @bot.command()
 @commands.is_owner()
-async def pin0(ctx, mID):
+async def pin0(ctx, mID: int):
     try:
         message = await ctx.fetch_message(mID)
         await message.pin()
@@ -506,7 +522,8 @@ async def pin0(ctx, mID):
 
 @bot.command()
 @commands.is_owner()
-async def unpin0(ctx, mID):
+async def unpin0(ctx, mID: int):
+    mID = quote(mID)
     try:
         message = await ctx.fetch_message(mID)
         await message.unpin()
@@ -517,7 +534,7 @@ async def unpin0(ctx, mID):
 
 @bot.command()
 @commands.has_permissions(manage_messages=True)
-async def pin(ctx, mID):
+async def pin(ctx, mID: int):
     try:
         message = await ctx.fetch_message(mID)
         await message.pin()
@@ -527,7 +544,8 @@ async def pin(ctx, mID):
 
 @bot.command()
 @commands.has_permissions(manage_messages=True)
-async def unpin(ctx, mID):
+async def unpin(ctx, mID: int):
+    mID = quote(mID)
     try:
         message = await ctx.fetch_message(mID)
         await message.unpin()
@@ -566,21 +584,64 @@ async def os(ctx):
 
 @bot.command()
 async def rick(ctx):
-    await ctx.send('Never gonna give you up!\nNever gonna let you down!\nNever gonna run around and, dessert you!\nNever gonna make you cry!\nNever gonna say goodbye!\nNever gonna run around and, dessert you!')
+    await ctx.send('Never gonna give you up!\nNever gonna let you down!\nNever gonna run around and, desert you!\nNever gonna make you cry!\nNever gonna say goodbye!\nNever gonna run around and, desert you!')
 
 @bot.command()
-async def calc(ctx, *, msg):
-    eq = msg.strip().replace('^', '**').replace('x', '*')
+async def calc(ctx, *, eq):
+    msg = await ctx.send('`]CALCULATING`')
+    eq = quote(eq)
+    eq = eq.strip().replace('^', '**').replace('x', '*')
     try:
         if '=' in eq:
-            l = eval(eq.split('=')[0], {"__builtins__": None}, {"sqrt": sqrt})
-            r = eval(eq.split('=')[1], {"__builtins__": None}, {"sqrt": sqrt})
+            l = ne.evaluate(eq.split('=')[0], {"__builtins__": None}, {"sqrt": sqrt})
+            r = ne.evaluate(eq.split('=')[1], {"__builtins__": None}, {"sqrt": sqrt})
             ans = str(l == r)
         else:
-            ans = str(eval(equation, {"__builtins__": None}, {"sqrt": sqrt}))
+            ans = str(ne.evaluate(eq))
     except TypeError:
         return await ctx.send("`]SYNTAX ERROR`")
-    await ctx.send(f'`] {ans}')
+    await msg.delete()
+    await ctx.send(f'`] {ans}`')
+
+@bot.command()
+async def graph(ctx, eq, xmin: int, xmax: int):
+    msg = await ctx.send('`]GRAPHING`')
+    try:
+        x = np.array(range(xmin, xmax))
+        y = ne.evaluate(eq.replace("^", "**"))
+        fig = pyplt.figure()
+        fig, ax = pyplt.subplots(figsize=(56, 40),facecolor=(.18, .31, .31))
+        ax.set_facecolor('#002823')
+        ax.tick_params(labelcolor='#00fff6')
+        pyplt = pyplt.prism()
+        pyplt.plot(x, y)
+        fig.patch.set_facecolor('#002823')
+        plotimg = io.BytesIO()
+        pyplt.savefig(plotimg, format='png')
+        plotimg.seek(0)
+        await msg.delete()
+        await ctx.send(file=discord.File(plotimg, 'img.png'))
+        pyplt.close()
+    except discord.HTTPException: await exc(ctx, 1)
+    except discord.Forbidden: await exc(ctx, 2)
+    except discord.NotFound: await exc(ctx, 3)
+
+@bot.command()
+async def cool(ctx, user: int):
+    strtemp = '////'
+    await ctx.channel.purge(limit = 1)
+    coolthing = await ctx.send(strtemp)
+    for x in range(250):
+        strtemp = f'{strtemp}////'
+        await coolthing.edit(content = f'{strtemp}')
+    await ctx.send(f'''
+Never gonna give <@{user}> up!
+Never gonna let <@{user}> down!
+Never gonna run around, and, desert you!
+Never gonna make <@{user}> cry!
+Never gonna say goodbye!
+Never gonna run around, and, desert you!
+''')
 
 ##/// TO PAY RESPECTS
 @bot.event
@@ -622,7 +683,7 @@ async def on_command_error(ctx, error):
     await ctx.send(f'```md\n#]ERROR MESSAGE\n>>> {error} <<<```')
 
 ##/// BOT SETTINGS
-key = 'secret stuffs'
+key = 'secrets'
 bot.run(key)
 client.run(key)
 
