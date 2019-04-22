@@ -18,6 +18,7 @@ import aiofiles
 import datetime
 import time
 import asyncio
+import math
 import threading
 import queue
 import typing
@@ -133,6 +134,8 @@ async def on_message(message):
             flist = f'```md\n#] TIME TO PAY RESPECTS\n> {message.author} PAID RESPECTS```'
             fmessage = await message.channel.send(flist)
             await fmessage.add_reaction('🇫')
+        elif message.content == "ok":
+            await message.channel.send('-MA 2019\nWait, are *you* MA?')
         elif message.content == ']help':
             await message.channel.send('```diff\n-] ERROR\n+] To see commands list, use ";]hlep"```')
             return
@@ -189,6 +192,7 @@ async def on_message(message):
                             else:
                                 M2M2 = await LoadNow('PrismaticM2M-C')
                                 await message.channel.send(M2M2[y-1])
+                            print(OUT)
 
 
                             ##/// LEARNING
@@ -277,8 +281,7 @@ async def hlep(ctx):
 > Slot machine :D
 ] ";]coin {x}"
 > Flips a virtual coin {x} times 0.0 [{x} is optional]
-] ";]git"    await channel.send(f'```diff\n+] I\'m back online, boiz!\n-] However, due to testing, I may be offline very shortly\n+] Turned on: {str(datetime.datetime.now())}\n-] Turns Off at 9PM CST```')
-
+] ";]git"
 > Shows the github/gitlab repo ;]
 ] ";]rng {x} {y}"
 > Prints a random number from {x} to {y}, {z} number of times (optional)
@@ -291,7 +294,17 @@ async def hlep(ctx):
 ] ";]info"
 > Shows additional info
 ] ";]rick"
-> Rick Roll! °ω°``````md
+> Rick Roll! °ω°
+] ";]bj"
+> BLACKJACK! 0o0
+] ";]spam {x}"
+> Spams {x} amount of chars >.<
+] ";]graph {eq} {xmin} {xmax}"
+> Graphs {eq} from {xmin} to {xmax} [ymin and ymax are auto calc-d]
+] ";]rto {x} {y}"
+> Reduces the ratio of {x} and {y} ;-;
+] ";]rad {x}"
+> Reduces a radical, {x}! >:D``````md
 #] To see mod commands, use ";]hlepmod"
 #] To have a conversation, use "]{your text here}"
 ```''', color=0x069d9d)
@@ -461,7 +474,7 @@ async def rng(ctx, rngl: int, rngh: int, *nums: int):
                 send += f'{temp} '
                 ttl.append(temp)
         if len(send) != 0: await ctx.send(f'```{send}```')
-        await ctx.send(f'```CNT // {len(ttl)}\nAVG // {sum(ttl)/len(ttl)}\nRNG // {max(ttl)-min(ttl)}```')
+        await ctx.send(f'```COUNT // {len(ttl)}\nAVRGE // {sum(ttl)/len(ttl)}\nRANGE // {max(ttl)-min(ttl)}```')
     except discord.HTTPException: await exc(ctx, 1)
     except discord.Forbidden: await exc(ctx, 2)
     except discord.NotFound: await exc(ctx, 3)
@@ -574,22 +587,12 @@ async def dnd(ctx):
     except discord.NotFound: await exc(ctx, 3)
 
 @bot.command()
-async def os(ctx):
-    try:
-        appinfo = await application_info
-        await ctx.send(appinfo)
-    except discord.HTTPException: await exc(ctx, 1)
-    except discord.Forbidden: await exc(ctx, 2)
-    except discord.NotFound: await exc(ctx, 3)
-
-@bot.command()
 async def rick(ctx):
     await ctx.send('Never gonna give you up!\nNever gonna let you down!\nNever gonna run around and, desert you!\nNever gonna make you cry!\nNever gonna say goodbye!\nNever gonna run around and, desert you!')
 
 @bot.command()
 async def calc(ctx, *, eq):
     msg = await ctx.send('`]CALCULATING`')
-    eq = quote(eq)
     eq = eq.strip().replace('^', '**').replace('x', '*')
     try:
         if '=' in eq:
@@ -610,10 +613,9 @@ async def graph(ctx, eq, xmin: int, xmax: int):
         x = np.array(range(xmin, xmax))
         y = ne.evaluate(eq.replace("^", "**"))
         fig = pyplt.figure()
-        fig, ax = pyplt.subplots(figsize=(56, 40),facecolor=(.18, .31, .31))
+        fig, ax = pyplt.subplots()
         ax.set_facecolor('#002823')
-        ax.tick_params(labelcolor='#00fff6')
-        pyplt = pyplt.prism()
+        ax.tick_params(labelcolor='#0000ff')
         pyplt.plot(x, y)
         fig.patch.set_facecolor('#002823')
         plotimg = io.BytesIO()
@@ -628,13 +630,17 @@ async def graph(ctx, eq, xmin: int, xmax: int):
 
 @bot.command()
 async def cool(ctx, user: int):
-    strtemp = '////'
+    strtemp = '////////'
     await ctx.channel.purge(limit = 1)
     coolthing = await ctx.send(strtemp)
-    for x in range(250):
-        strtemp = f'{strtemp}////'
-        await coolthing.edit(content = f'{strtemp}')
-    await ctx.send(f'''
+    varslol = True
+    while varslol == True:
+        try:
+            for x in range(125):
+                strtemp = f'{strtemp}////////'
+                await coolthing.edit(content = f'{strtemp}')
+            varslol = False
+            await ctx.send(f'''
 Never gonna give <@{user}> up!
 Never gonna let <@{user}> down!
 Never gonna run around, and, desert you!
@@ -642,6 +648,130 @@ Never gonna make <@{user}> cry!
 Never gonna say goodbye!
 Never gonna run around, and, desert you!
 ''')
+        except:
+            if varslol == False:
+                await coolthing.edit(f'''
+Never gonna give <@{user}> up!
+Never gonna let <@{user}> down!
+Never gonna run around, and, desert you!
+Never gonna make <@{user}> cry!
+Never gonna say goodbye!
+Never gonna run around, and, desert you!
+''')
+            else:
+                await ctx.send('YOU WILL NOT END THIS!')
+                strtemp = '////////'
+                coolthing = await ctx.send(strtemp)
+
+@bot.command()
+async def bj(ctx):
+    heart = ['🂱','🂲','🂳','🂴','🂵','🂶','🂷','🂸','🂹','🂺','🂻','🂽','🂾']
+    spade = ['🂡','🂢','🂣','🂤','🂥','🂦','🂧','🂨','🂩','🂪','🂫','🂭','🂮']
+    diam = ['🃁','🃂','🃃','🃄','🃅','🃆','🃇','🃈','🃉','🃊','🃋','🃍','🃎']
+    club = ['🃑','🃒','🃓','🃔','🃕','🃖','🃗','🃘','🃙','🃚','🃛','🃝','🃞']
+    ttl1 = ttl2 = temp = stu = 0
+    usr = cpu = cputxt = usrtxt = ""
+    while ttl1 <= 18:
+        temp = rand(0,12)
+        if temp + ttl1 + 1 != 21:
+            stu = rand(0,3)
+            if stu == 1:
+                usr = usr+heart[temp]+' '
+                del heart[temp]
+            elif stu == 2:
+                usr = usr+spade[temp]+' '
+                del spade[temp]
+            elif stu == 3:
+                usr = usr+diam[temp]+' '
+                del diam[temp]
+            elif stu == 3:
+                usr = usr+club[temp]+' '
+                del club[temp]
+            temp += 1
+            if temp > 10: temp = 10
+            ttl1 += temp
+    while ttl2 <= 18:
+        temp = rand(0,12)
+        if temp + ttl2 + 1 != 21:
+            if stu == 1:
+                cpu = usr+heart[temp]+' '
+                del heart[temp]
+            elif stu == 2:
+                cpu = usr+spade[temp]+' '
+                del spade[temp]
+            elif stu == 3:
+                cpu = usr+diam[temp]+' '
+                del diam[temp]
+            elif stu == 3:
+                cpu == usr+club[temp]+' '
+                del club[temp]
+            temp += 1
+            if temp > 10: temp = 10
+            ttl2 += temp
+    if ttl1 > 21:
+        usrtxt = f'USER // {usr} [{ttl1}] [BUST]'
+        cputxt = f'COMP // {cpu} [{ttl2}] [WIN]'
+    elif ttl1 > ttl2:
+        usrtxt = f'USER // {usr} [{ttl1}] [WIN]'
+        cputxt = f'COMP // {cpu} [{ttl2}] [LOSS]'
+    if ttl2 > 21:
+        cputxt = f'COMP // {cpu} [{ttl2}] [BUST]'
+        usrtxt = f'USER // {usr} [{ttl1}] [WIN]'
+    elif ttl2 > ttl1:
+        cputxt = f'COMP // {cpu} [{ttl2}] [WIN]'
+        usrtxt = f'USER // {usr} [{ttl1}] [LOSS]'
+    if ttl1 == ttl2:
+        usrtxt = f'USER // {usr} [{ttl1}] [TIE]'
+        cputxt = f'COMP // {cpu} [{ttl2}] [TIE]'
+    await ctx.send(f'```md\n#]BLACK JACK!\n \n{usrtxt}\n \n{cputxt}```')
+
+@bot.command()
+async def spam(ctx, num: int):
+    if num > 10000: num = 10000
+    send = ""
+    data = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcsdefghgijklmnopqrstuvwxyz1234567890!@#$%^&*()-_=+[]{}\"\'<,>./?\\|`~"
+    for x in range(num):
+        send = send+(data[rand(0,len(data)-1)])
+        if len(send) == 2000:
+            await ctx.send(send)
+            send = ""
+    if len(send) > 0: await ctx.send(send)
+
+@bot.command()
+async def rto(ctx, int1: int, int2: int):
+    factor = math.gcd(int1, int2)
+    await ctx.send(f'```]FACT // {factor}\n]INT1 // {int1/factor}\n]INT2 // {int2/factor}```')
+
+@bot.command()
+async def rad(ctx, D: int):
+    K = 1
+    for I in range(1,500):
+        for J in range(2,1000):
+            if not math.remainder(D, J**2):
+                D = D/(J**2)
+                K = K*J
+        if D == 1:
+            break
+    if K == 1: await ctx.send(f'```]ANS // √{D}```')
+    elif D == 1: await ctx.send(f'```]ANS // {K}```')
+    else: await ctx.send(f'```]ANS // {K}√{D}```')
+
+@bot.command()
+async def quad(ctx, A: int, B: int, C: int):
+    D = B**2 - 4*A*C
+    K = 1
+    for I in range(1,500):
+        for J in range(2,1000):
+            if not math.remainder(D, J**2):
+                D = D/(J**2)
+                K = K*J
+        if D == 1:
+            break
+    if K == 1: STR = f'√{D}'
+    elif D == 1: STR = f'{K}'
+    else: STR = f'{K}√{D}'
+    await ctx.send(f'```md\n#]QUADRATICS``````\n{-B}+-{STR}\n------------\n{2*A}``````diff\n+] {(-B+((B**2)-2*A*C)**.5)/(2*A)}\n-] {(-B-((B**2)-2*A*C)**.5)/(2*A)}```')
+
 
 ##/// TO PAY RESPECTS
 @bot.event
@@ -680,10 +810,10 @@ async def on_command_error(ctx, error):
         await ctx.send('```diff\n-]ERROR 401\n=]UNAUTHORIZED```')
     elif isinstance(error, commands.ExtensionError):
         await ctx.send('```diff\n-]ERROR 424\n=]FAILED EXTENSION```')
-    await ctx.send(f'```md\n#]ERROR MESSAGE\n>>> {error} <<<```')
+    await ctx.send(f'```md\n#]>>> {error} <<<```')
 
 ##/// BOT SETTINGS
-key = 'secrets'
+key = 'client secrets'
 bot.run(key)
 client.run(key)
 
