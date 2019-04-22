@@ -9,6 +9,7 @@
 #-----------------
 
 ##/// STARTUP
+print('IMPORTING')
 import logging
 import discord
 import random
@@ -20,16 +21,30 @@ import asyncio
 import threading
 import queue
 import typing
+import sysconfig
+import platform
+import ast
+import io
+import shlex
+import matplotlib.pyplot as pyplt
+import numpy as np
+import numexpr as ne
+from ast import literal_eval
 from discord.ext import commands
+from shlex import quote
 from discord.ext.commands import Bot
 from discord.ext.commands import has_permissions
 from discord.ext.commands import MissingPermissions
 from discord.voice_client import VoiceClient
+print('DONE\nINITIALIZING')
 bot = commands.Bot(command_prefix=";]")
 bot.remove_command("help")
 logging.basicConfig(level='INFO')
 client = discord.Client()
-BAN = ["custombadwords"]
+flist = ""
+BAN = ["idontfuckingcarejustno"]
+
+print('DEFINING')
 
 def FilesLoad(rw): #// Making life easy when the actual code comes
     global PrizM2MR, PrizM2MC, PrizTXT, PrizMATHl, PrizSCIl, PrizENGl, PrizMATHr, PrizSCIr, PrizENGr #Or this wont work at all
@@ -75,19 +90,17 @@ async def LearnNow(File, MD, TxT, addtext): ##/// Instant Access (in case)
         print(f'\n\n\n{addtext} [{TxT}]')
         print('WRITE')
 
-async def LEARNnSEND(File, MD, TxT, addtext, sendhere: int, sendthis):
+async def LEARNnSEND(File, MD, TxT, addtext, sendhere, sendthis):
     async with aiofiles.open(File, mode=MD) as CurrentText:
         await CurrentText.write(TxT)
         await CurrentText.write('\n')
         print(f'\n\n\n{addtext} [{TxT}]')
         print('WRITE [LEARNnSEND]')
-    channel = bot.get_channel(sendhere)
-    await channel.send(sendthis)
+    await sendhere.send(sendthis)
 
 async def SEND2(chnl, text1, text2):
-    channel = bot.get_channel(chnl)
-    await channel.send(text1)
-    await channel.send(text2)
+    await chnl.send(text1)
+    await chnl.send(text2)
 
 async def exc(ctx, code: int):
     print('EXCEPTION!')
@@ -95,7 +108,7 @@ async def exc(ctx, code: int):
     elif code == 2: await ctx.send('```diff\n-]ERROR 403\n=]ALL FORBIDDEN```')
     elif code == 3: await ctx.send('```diff\n-]ERROR 404\n=]ALL NOT FOUND```')
 
-
+print('DONE')
 
 ##/// OUTPUT
 @bot.listen()
@@ -103,7 +116,7 @@ async def on_ready():
     print('\n \n \n \n',bot.guilds,'\n',*[bot.get_all_channels()],'\n \n \nGG! !] PRIZ AI ;] [! // v',discord.__version__,'// RESTART - CTRL Z, [up], [enter]\n \n \n')
     channel = bot.get_channel(556247032701124650)
     await channel.purge(limit=1)
-    await channel.send(f'```diff\n+] I\'m back online, boiz!\n-] However, due to testing, I may be offline very shortly\n+] Turned on: {str(datetime.datetime.now())}\n-] Turns Off at 9PM CST```')
+    await channel.send(f'```md\n#] I\'m back online, boiz!\n> However, due to testing, I may be offline very shortly\n> Turned on: {str(datetime.datetime.now())}\n#] Turns Off at 9PM CST```')
     await bot.change_presence(activity=discord.Game(name='with Prisms and Voxels :D',url='https://discord.gg/Z84Nm6n'))
     channel = 561673143996121116
     print(time.time())
@@ -111,29 +124,28 @@ async def on_ready():
     FilesLoad('r')
     await ArraysLoad()
 
-
-
-##/// TEXT I/O
 @bot.listen()
 async def on_message(message):
     if message.author ==  bot.user:
         return
     else:
-        if message.content == ']help':
+        if message.content == "f":
+            flist = f'```md\n#] TIME TO PAY RESPECTS\n> {message.author} PAID RESPECTS```'
+            fmessage = await message.channel.send(flist)
+            await fmessage.add_reaction('🇫')
+        elif message.content == ']help':
             await message.channel.send('```diff\n-] ERROR\n+] To see commands list, use ";]hlep"```')
             return
-        if message.content.startswith(']')==True:
+        elif message.content.startswith(']')==True:
             await ArraysLoad()
             message.content = message.content[1:]
             blank = False
-            for z in range(0,len(message.content)-1):
-                if message.content[0]==" " and blank == False:
-                    message.content = message.content[1:]
-                else:
-                    blank == True
-                    break
-
-            words = message.content.split(" ")
+            message.content = message.content.strip()
+            print(message.content)
+            if message.content == "":
+                stop == True
+            else:
+                words = message.content.split(" ")
             stop = False
             for word in words:
                 if word in BAN:
@@ -150,14 +162,14 @@ async def on_message(message):
                     await message.channel.send('`]DONT SPAM PLS`')
                     message.content = message.content[:200]
                 if "https" not in message.content:
-                    LOOP = 1
-                    AI = await LoadNow('PrismaticText')
-                    for MSG in AI:
-                        print(MSG)
-                        if message.content in MSG and message.content != MSG and message.content+"\n" != MSG:
-                            await message.channel.send(MSG)
-                            LOOP = 0
-                            break
+                        LOOP = 1
+                        AI = await LoadNow('PrismaticText')
+                        for MSG in AI:
+                            print(MSG)
+                            if message.content in MSG and message.content != MSG and message.content+"\n" != MSG:
+                                await message.channel.send(MSG)
+                                LOOP = 0
+                                break
 
                         ##/// TO DISCORD
                         #//M2M READ
@@ -182,6 +194,7 @@ async def on_message(message):
                             ##/// LEARNING
                             if rand(0,5)==2: #// LEARN TEXT
                                 store = message.content+'\n'
+                                print(message.content)
                                 words = message.content.split(" ")
                                 HAS = PMath = PEng = PSci = 0
                                 MATHl = await LoadNow('MathIn')
@@ -221,10 +234,10 @@ async def on_message(message):
                                         for word in words:
                                             MSG = await message.channel.send(f'```diff\n+]WHAT SUBJECT DOES THE FOLLOWING WORD BELONG TO?\n-] MATHS ">1"\n-] LANGUAGE ">2"\n-] SCIENCE ">3"\n-] GENERIC - anything else\n \n=]Please a moment before responding :D```\n{word}\n\_\_\_\_\_\_\_\_\_')
                                             def check(m):
-                                                return m.content == 'hello' and m.channel == channel
-                                            user = await client.wait_for('message', check=check)
+                                                return m.channel == message.channel and m.author == message.author
+                                            user = await bot.wait_for('message', check=check)
                                             await user.channel.purge(limit=1)
-                                            await client.edit_message(MSG,"`]THX FAM`")
+                                            await MSG.edit(content="`]THX FAM`")
                                             if ">1" in user.content:
                                                 await LEARNnSEND('MathIn', 'a', word, 'MATHED', user.channel,'`]oOoOh Maths... :D`')
                                             elif ">2" in user.content:
@@ -232,7 +245,7 @@ async def on_message(message):
                                             elif ">3" in user.content:
                                                 await LEARNnSEND('SciIn', 'a', word, 'EXPIRIMENTED', user.channel, '`]I will yote this and observe what happens... O.O`')
                                             elif word == words[len(words)-1]:
-                                                await LEARNnSEND('PrismaticText', 'a', user.content, 'ADDED', user.channel, '`]LEARN`')
+                                                await LEARNnSEND('PrismaticText', 'a', message.content, 'ADDED', user.channel, '`]LEARN`')
 
 
                             ##///M2M WRITE
@@ -255,27 +268,30 @@ async def on_message(message):
 async def hlep(ctx):
     embed = discord.Embed(title="!] PRIZ AI ;]", description='''
 ```md
-# !] PRIZ AI ;] [! COMMANDS LIST``````diff
-+] ";]hlep"
-=] Brings up this message :)
-+] ";]ping"
-=] Shows the ping time :L
-+] ";]slots"
-=] Slot machine :D
-+] ";]coin {x}"
-=] Flips a virtual coin {x} times 0.0 [{x} is optional]
-+] ";]git"
-=] Shows the github/gitlab repo ;]
-+] ";]rng {x} {y}"
-=] Prints a random number from {x} to {y}, {z} number of times (optional)
-+] ";]clr {x}"
-=] Clears [x] messages XD
-+] ";]usrinfo"
-=]  Shows your user info 0.0
-+] ";]dnd"
-=] Roles all dice from Dragons and Dungeons!
-+] ";]info"
-=] Shows additional info``````md
+#] !] PRIZ AI ;] [! COMMANDS LIST``````md
+] ";]hlep"
+> Brings up this message :)
+] ";]ping"
+> Shows the ping time :L
+] ";]slots"
+> Slot machine :D
+] ";]coin {x}"
+> Flips a virtual coin {x} times 0.0 [{x} is optional]
+] ";]git"    await channel.send(f'```diff\n+] I\'m back online, boiz!\n-] However, due to testing, I may be offline very shortly\n+] Turned on: {str(datetime.datetime.now())}\n-] Turns Off at 9PM CST```')
+
+> Shows the github/gitlab repo ;]
+] ";]rng {x} {y}"
+> Prints a random number from {x} to {y}, {z} number of times (optional)
+] ";]clr {x}"
+> Clears [x] messages XD
+] ";]usrinfo"
+> Shows your user info 0.0
+] ";]dnd"
+> Roles all dice from Dragons and Dungeons!
+] ";]info"
+> Shows additional info
+] ";]rick"
+> Rick Roll! °ω°``````md
 #] To see mod commands, use ";]hlepmod"
 #] To have a conversation, use "]{your text here}"
 ```''', color=0x069d9d)
@@ -284,22 +300,35 @@ async def hlep(ctx):
 @bot.command(aliases=["helpmod"])
 async def hlepmod(ctx):
     embed = discord.Embed(title="!] PRIZ AI ;]", description='''
-```md
-# !] PRIZ AI ;] [! MOD STUFF``````diff
--] ";]hlepmod"
-=] Brings up this message :)
--] ";]ban {user} {delete days} {reason}"
-=] Bans a {user} and removes messages from {delete days} ago for a {reason}
--] ";]kick {user}"
-=] Kicks a {user} from the server
--] ";]clr {int}"
-=] Deletes a {int} amount of messages
--] ";]clrin {messageID1} {messageID2}"
-=] Deletes messages between {messageID1} and {messageID2}``````md
-#] To see user commands, use ";]hlep"
-#] To have a conversation, use "]{your text here}"
+```diff
+-] !] PRIZ AI ;] [! MOD STUFF``````md
+] ";]hlepmod"
+> Brings up this message :)
+] ";]ban {user} {delete days} {reason}"
+> Bans a {user} and removes messages from {delete days} ago for a {reason}
+] ";]kick {user}"
+> Kicks a {user} from the server
+] ";]clr {int}"
+> Deletes a {int} amount of messages
+] ";]clrin {messageID1} {messageID2}" # NOT WORKING
+> Deletes messages between {messageID1} and {messageID2}``````diff
+-] To see user commands, use ";]hlep"
+-] To have a conversation, use "]{your text here}"
 ```''', color=0x069d9d)
     await ctx.send(embed=embed)
+
+@bot.command(aliases=["system"])
+async def sys(ctx):
+    platform = str(sysconfig.get_platform())
+    pyver = str(sysconfig.get_python_version())
+    embed = discord.Embed(title="!] PRIZ AI ;]", description=f'''
+```diff
++] !] PRIZ AI ;] [! SYSTEM INFO``````asciidoc
+PLATFORM: {platform}
+PYTHON: {pyver}
+```''', color=0x069d9d)
+    await ctx.send(embed=embed)
+
 
 @bot.command()
 async def info(ctx):
@@ -334,7 +363,7 @@ async def slots(ctx):
     except discord.NotFound: await exc(ctx, 3)
 
 @bot.command()
-async def coin(ctx, *nums):
+async def coin(ctx, *nums: int):
     try:
         if len(nums) == 0:
             num = 1
@@ -407,7 +436,7 @@ async def clr0(ctx, arg: int):
     except discord.NotFound: await exc(ctx, 3)
 
 @bot.command()
-async def rng(ctx, rngl: int, rngh: int, *nums):
+async def rng(ctx, rngl: int, rngh: int, *nums: int):
     try:
         if len(nums) == 0:
             num = 1
@@ -429,6 +458,8 @@ async def rng(ctx, rngl: int, rngh: int, *nums):
             else:
                 await ctx.send(f'```{send}```')
                 send = ""
+                send += f'{temp} '
+                ttl.append(temp)
         if len(send) != 0: await ctx.send(f'```{send}```')
         await ctx.send(f'```CNT // {len(ttl)}\nAVG // {sum(ttl)/len(ttl)}\nRNG // {max(ttl)-min(ttl)}```')
     except discord.HTTPException: await exc(ctx, 1)
@@ -461,6 +492,7 @@ async def usrinfo(ctx):
 @has_permissions(manage_roles=True, kick_members=True)
 async def kick(self, *members: discord.Member):
     for member in members:
+        member = quote(member)
         try:
             await self.bot.kick(member)
         except discord.HTTPException: await exc(ctx, 1)
@@ -469,7 +501,7 @@ async def kick(self, *members: discord.Member):
 
 @bot.command()
 @commands.has_permissions(manage_messages=True)
-async def clrin(ctx, int1: int, Int2: int):
+async def clrin(ctx, int1: int, int2: int):
     try:
         clrh = min(int1, int2)
         clrl = max(int1, int2)
@@ -480,7 +512,7 @@ async def clrin(ctx, int1: int, Int2: int):
 
 @bot.command()
 @commands.is_owner()
-async def pin0(ctx, mID):
+async def pin0(ctx, mID: int):
     try:
         message = await ctx.fetch_message(mID)
         await message.pin()
@@ -490,17 +522,19 @@ async def pin0(ctx, mID):
 
 @bot.command()
 @commands.is_owner()
-async def unpin0(ctx, mID):
+async def unpin0(ctx, mID: int):
+    mID = quote(mID)
     try:
         message = await ctx.fetch_message(mID)
         await message.unpin()
+        await ctx.send('`]UNPINNED`')
     except discord.HTTPException: await exc(ctx, 1)
     except discord.Forbidden: await exc(ctx, 2)
     except discord.NotFound: await exc(ctx, 3)
 
 @bot.command()
 @commands.has_permissions(manage_messages=True)
-async def pin(ctx, mID):
+async def pin(ctx, mID: int):
     try:
         message = await ctx.fetch_message(mID)
         await message.pin()
@@ -510,10 +544,12 @@ async def pin(ctx, mID):
 
 @bot.command()
 @commands.has_permissions(manage_messages=True)
-async def unpin(ctx, mID):
+async def unpin(ctx, mID: int):
+    mID = quote(mID)
     try:
         message = await ctx.fetch_message(mID)
         await message.unpin()
+        await ctx.send('`]UNPINNED`')
     except discord.HTTPException: await exc(ctx, 1)
     except discord.Forbidden: await exc(ctx, 2)
     except discord.NotFound: await exc(ctx, 3)
@@ -547,37 +583,107 @@ async def os(ctx):
     except discord.NotFound: await exc(ctx, 3)
 
 @bot.command()
-async def test(ctx, *, args):
-    print(eval(args))
+async def rick(ctx):
+    await ctx.send('Never gonna give you up!\nNever gonna let you down!\nNever gonna run around and, desert you!\nNever gonna make you cry!\nNever gonna say goodbye!\nNever gonna run around and, desert you!')
+
+@bot.command()
+async def calc(ctx, *, eq):
+    msg = await ctx.send('`]CALCULATING`')
+    eq = quote(eq)
+    eq = eq.strip().replace('^', '**').replace('x', '*')
+    try:
+        if '=' in eq:
+            l = ne.evaluate(eq.split('=')[0], {"__builtins__": None}, {"sqrt": sqrt})
+            r = ne.evaluate(eq.split('=')[1], {"__builtins__": None}, {"sqrt": sqrt})
+            ans = str(l == r)
+        else:
+            ans = str(ne.evaluate(eq))
+    except TypeError:
+        return await ctx.send("`]SYNTAX ERROR`")
+    await msg.delete()
+    await ctx.send(f'`] {ans}`')
+
+@bot.command()
+async def graph(ctx, eq, xmin: int, xmax: int):
+    msg = await ctx.send('`]GRAPHING`')
+    try:
+        x = np.array(range(xmin, xmax))
+        y = ne.evaluate(eq.replace("^", "**"))
+        fig = pyplt.figure()
+        fig, ax = pyplt.subplots(figsize=(56, 40),facecolor=(.18, .31, .31))
+        ax.set_facecolor('#002823')
+        ax.tick_params(labelcolor='#00fff6')
+        pyplt = pyplt.prism()
+        pyplt.plot(x, y)
+        fig.patch.set_facecolor('#002823')
+        plotimg = io.BytesIO()
+        pyplt.savefig(plotimg, format='png')
+        plotimg.seek(0)
+        await msg.delete()
+        await ctx.send(file=discord.File(plotimg, 'img.png'))
+        pyplt.close()
+    except discord.HTTPException: await exc(ctx, 1)
+    except discord.Forbidden: await exc(ctx, 2)
+    except discord.NotFound: await exc(ctx, 3)
+
+@bot.command()
+async def cool(ctx, user: int):
+    strtemp = '////'
+    await ctx.channel.purge(limit = 1)
+    coolthing = await ctx.send(strtemp)
+    for x in range(250):
+        strtemp = f'{strtemp}////'
+        await coolthing.edit(content = f'{strtemp}')
+    await ctx.send(f'''
+Never gonna give <@{user}> up!
+Never gonna let <@{user}> down!
+Never gonna run around, and, desert you!
+Never gonna make <@{user}> cry!
+Never gonna say goodbye!
+Never gonna run around, and, desert you!
+''')
+
+##/// TO PAY RESPECTS
+@bot.event
+async def on_reaction_add(reaction,user):
+    try:
+        if str(user) not in reaction.message.content:
+            if reaction.message.author == bot.user and user != bot.user:
+                if 'PAID RESPECTS' in reaction.message.content:
+                    await reaction.message.edit(content = f'```md{reaction.message.content[5:-3]}\n> {user} PAID RESPECTS```')
+    except discord.HTTPException: await exc(ctx, 1)
+    except discord.Forbidden: await exc(ctx, 2)
+    except discord.NotFound: await exc(ctx, 3)
 
 ##/// ERRORS
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.BadArgument):
         await ctx.send('```diff\n-]ERROR 400\n=]BAD ARGUMENT```')
-    if isinstance(error, commands.CommandNotFound):
+    elif isinstance(error, commands.CommandNotFound):
         await ctx.send('```diff\n-]ERROR 404\n=]COMMAND NOT FOUND```')
-    if isinstance(error, commands.BotMissingPermissions):
+    elif isinstance(error, commands.BotMissingPermissions):
         await ctx.send('```diff\n-]ERROR 503\n=]BOT FORBIDDEN```')
-    if isinstance(error, commands.MissingPermissions):
+    elif isinstance(error, commands.MissingPermissions):
         await ctx.send('```diff\n-]ERROR 403\n=]USER FORBIDDEN```')
-    if isinstance(error, commands.ConversionError):
+    elif isinstance(error, commands.ConversionError):
         await ctx.send('```diff\n-]ERROR 503\n=]UNAVAILABLE```')
-    if isinstance(error, commands.MissingRequiredArgument):
+    elif isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('```diff\n-]ERROR 416\n=]MISSING ARGS```')
-    if isinstance(error, commands.ArgumentParsingError):
+    elif isinstance(error, commands.ArgumentParsingError):
         await ctx.send('```diff\n-]ERROR 418\n=]IM A TEAPOT```')
-    if isinstance(error, commands.TooManyArguments):
+    elif isinstance(error, commands.TooManyArguments):
         await ctx.send('```diff\n-]ERROR 429\n=]TOO MANY ARGS```')
-    if isinstance(error, commands.DisabledCommand):
+    elif isinstance(error, commands.DisabledCommand):
         await ctx.send('```diff\n-]ERROR 423\n=]LOCKED COMMAND```')
-    if isinstance(error, commands.NotOwner):
+    elif isinstance(error, commands.NotOwner):
         await ctx.send('```diff\n-]ERROR 401\n=]UNAUTHORIZED```')
-    if isinstance(error, commands.ExtensionError):
+    elif isinstance(error, commands.ExtensionError):
         await ctx.send('```diff\n-]ERROR 424\n=]FAILED EXTENSION```')
+    await ctx.send(f'```md\n#]ERROR MESSAGE\n>>> {error} <<<```')
 
 ##/// BOT SETTINGS
-key = 'key goes here'
+key = 'secrets'
 bot.run(key)
 client.run(key)
 
@@ -614,4 +720,3 @@ Available Permissions:
     manage_webhooks
     manage_emojis
 """
-
