@@ -9,9 +9,21 @@
 #-----------------
 
 ##/// STARTUP
-import logging, discord, random, logging, aiofiles, datetime, time, asyncio, threading, queue, typing
+import logging
+import discord
+import random
+import logging
+import aiofiles
+import datetime
+import time
+import asyncio
+import threading
+import queue
+import typing
 from discord.ext import commands
-from discord.ext.commands import Bot, has_permissions, MissingPermissions
+from discord.ext.commands import Bot
+from discord.ext.commands import has_permissions
+from discord.ext.commands import MissingPermissions
 from discord.voice_client import VoiceClient
 bot = commands.Bot(command_prefix=";]")
 bot.remove_command("help")
@@ -91,7 +103,7 @@ async def on_ready():
     print('\n \n \n \n',bot.guilds,'\n',*[bot.get_all_channels()],'\n \n \nGG! !] PRIZ AI ;] [! // v',discord.__version__,'// RESTART - CTRL Z, [up], [enter]\n \n \n')
     channel = bot.get_channel(556247032701124650)
     await channel.purge(limit=1)
-    await channel.send(f'```diff\n+]I\'m back online, boiz!\n-]However, due to testing, I may be offline very shortly\n+] Turned on: {str(datetime.datetime.now())}\n-] Turns Off at 9PM CST```')
+    await channel.send(f'```diff\n+] I\'m back online, boiz!\n-] However, due to testing, I may be offline very shortly\n+] Turned on: {str(datetime.datetime.now())}\n-] Turns Off at 9PM CST```')
     await bot.change_presence(activity=discord.Game(name='with Prisms and Voxels :D',url='https://discord.gg/Z84Nm6n'))
     channel = 561673143996121116
     print(time.time())
@@ -138,14 +150,14 @@ async def on_message(message):
                     await message.channel.send('`]DONT SPAM PLS`')
                     message.content = message.content[:200]
                 if "https" not in message.content:
-                        LOOP = 1
-                        AI = await LoadNow('PrismaticText')
-                        for MSG in AI:
-                            print(MSG)
-                            if message.content in MSG and message.content != MSG and message.content+"\n" != MSG:
-                                await message.channel.send(MSG)
-                                LOOP = 0
-                                break
+                    LOOP = 1
+                    AI = await LoadNow('PrismaticText')
+                    for MSG in AI:
+                        print(MSG)
+                        if message.content in MSG and message.content != MSG and message.content+"\n" != MSG:
+                            await message.channel.send(MSG)
+                            LOOP = 0
+                            break
 
                         ##/// TO DISCORD
                         #//M2M READ
@@ -535,8 +547,8 @@ async def os(ctx):
     except discord.NotFound: await exc(ctx, 3)
 
 @bot.command()
-async def test(ctx):
-    print('blah')
+async def test(ctx, *, args):
+    print(eval(args))
 
 ##/// ERRORS
 @bot.event
@@ -565,7 +577,7 @@ async def on_command_error(ctx, error):
         await ctx.send('```diff\n-]ERROR 424\n=]FAILED EXTENSION```')
 
 ##/// BOT SETTINGS
-key = ''
+key = 'key goes here'
 bot.run(key)
 client.run(key)
 
