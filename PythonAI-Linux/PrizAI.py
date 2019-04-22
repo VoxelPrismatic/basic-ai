@@ -13,8 +13,9 @@ import logging, discord, random, logging, aiofiles, datetime, time, asyncio, thr
 from discord.ext import commands
 from discord.ext.commands import Bot, has_permissions, MissingPermissions
 from discord.voice_client import VoiceClient
-logging.basicConfig(level='INFO')
 bot = commands.Bot(command_prefix=";]")
+bot.remove_command("help")
+logging.basicConfig(level='INFO')
 client = discord.Client()
 BAN = ["custombadwords"]
 
@@ -32,6 +33,8 @@ def FilesLoad(rw): #// Making life easy when the actual code comes
     print('R/W TO FILES')
 ##/// Currently, the above is only used to READ data for the below section, but i'd rather have it now in case i need it later
 
+def rand(ll,tt): return random.randint(ll,tt)
+
 async def ArraysLoad():
     global M2M1, M2M2, AI, MATHl, SCIl, ENGl, MATHr, SCIr, ENGr
     FilesLoad('r')
@@ -47,75 +50,47 @@ async def ArraysLoad():
         ENGr = await eng2R.readlines()
         print('LOADED ARRAYS')
 
-def LoadNow(FileName):
-    with open(FileName, mode='r') as shit:
-        wtf = shit.readlines()
-    time.sleep(.1) # Verifies the transfer is over (its small data [~1mb] so this is adequate)
+async def LoadNow(FileName):
+    async with aiofiles.open(FileName, mode='r') as shit:
+        wtf = await shit.readlines()
     print('FORCE LOADED ARRAYS')
     return wtf
 
-def LearnNow(File, MD, TxT, addtext): ##/// Instant Access (in case)
-    with open(File, mode=MD) as CurrentText:
-        CurrentText.write(TxT)
-        CurrentText.write('\n')
+async def LearnNow(File, MD, TxT, addtext): ##/// Instant Access (in case)
+    async with aiofiles.open(File, mode=MD) as CurrentText:
+        await CurrentText.write(TxT)
+        await CurrentText.write('\n')
         print(f'\n\n\n{addtext} [',TxT,']')
         print('WRITE')
-        time.sleep(.2) # Verifies the transfer is over (its small data [~200bytes] so this is adequate)
         print('CONTINUE')
-
-def user_allowed(message):
-    author = message.author
-    mod = bot.get_cog('Mod')
-    if mod is not None:
-        if settings.owner == author.id:
-            return True
-        if not message.channel.is_private:
-            server = message.server
-            names = (settings.get_server_admin(server), settings.get_server_mod(server))
-            results = map(lambda name: discord.utils.get(author.roles, name=name), names)
-            for r in results:
-                if r is not None:
-                    return True
-        if author.id in mod.blacklist_list:
-            return False
-        if mod.whitelist_list:
-            if author.id not in mod.whitelist_list:
-                return False
-        if not message.channel.is_private:
-            if message.server.id in mod.ignore_list["SERVERS"] or message.channel.id in mod.ignore_list["CHANNELS"]:
-                return False
-        return True
-    else:
-        return True
-
-def Globalize():
-    global M2M1, M2M2, AI, MATHl, SCIl, ENGl, MATHr, SCIr, ENGr, PrizM2MR, PrizM2MC, PrizTXT, PrizMATHl, PrizSCIl, PrizENGl, PrizMATHr, PrizSCIr, PrizENGr, PMath, PEng, PSci
 
 ##/// OUTPUT
 @bot.listen()
 async def on_ready():
     print('\n \n \n \n',bot.guilds,'\n',*[bot.get_all_channels()],'\n \n \nGG! !] PRIZ AI ;] [! // v',discord.__version__,'// RESTART - CTRL Z, [up], [enter]\n \n \n')
-    channel =  bot.get_channel(556247032701124650)
+    channel = bot.get_channel(556247032701124650)
     await channel.purge(limit=1)
     await channel.send(f'```diff\n+]I\'m back online, boiz!\n-]However, due to testing, I may be offline very shortly\n+] Turned on: {str(datetime.datetime.now())}\n-] Turns Off at 9PM CST```')
-    await bot.change_presence(activity=discord.Game(name='with Prisms and Voxels :D'))
+    await bot.change_presence(activity=discord.Streaming(name='with Prisms and Voxels :D',url='https://discord.gg/Z84Nm6n'))
     channel = 561673143996121116
     print(time.time())
     #vc = await channel.connect()
     FilesLoad('r')
-    asyncio.ensure_future(ArraysLoad())
+    await ArraysLoad()
+
+
 
 ##/// TEXT I/O
-@bot.listen("on_message")
+@bot.listen()
 async def on_message(message):
     if message.author ==  bot.user:
         return
     else:
-        if ']help' in message.content:
+        if message.content == ']help':
             await message.channel.send('```diff\n-] ERROR\n+] To see commands list, use ";]hlep"```')
+            return
         if message.content.startswith(']')==True:
-            FilesLoad('r')
-            asyncio.ensure_future(ArraysLoad())
+            await ArraysLoad()
             message.content = message.content[1:]
             blank = False
             for z in range(0,len(message.content)-1):
@@ -134,28 +109,28 @@ async def on_message(message):
             if blank == True:
                 await message.channel.send('`]MUST NOT BE BLANK (otherwise i will break D: )`')
                 stop = True
-                
+
             if stop == False:
                 generic = str(message.content)
                 print(message.content)
                 if len(generic) > 200:
                     await message.channel.send('`]DONT SPAM PLS`')
                     message.content = message.content[:200]
-                if " " in message.content and "https" not in message.content:
+                if "https" not in message.content:
                         LOOP = 1
-                        AI = LoadNow('PrismaticText')
+                        AI = await LoadNow('PrismaticText')
                         for MSG in AI:
                             print(MSG)
                             if message.content in MSG and message.content != MSG and message.content+"\n" != MSG:
                                 await message.channel.send(MSG)
                                 LOOP = 0
                                 break
-                            
+
                         ##/// TO DISCORD
                         #//M2M READ
                         if LOOP==1:
                             y = 0
-                            M2M1 = LoadNow('PrismaticM2M-R')
+                            M2M1 = await LoadNow('PrismaticM2M-R')
                             for x in range(len(M2M1)-1):
                                 if message.content in M2M1[x]:
                                     y = x
@@ -168,36 +143,38 @@ async def on_message(message):
                                     OUT = random.choice(AI)
                                 await message.channel.send(OUT)
                             else:
-                                M2M2 = LoadNow('PrismaticM2M-C')
+                                M2M2 = await LoadNow('PrismaticM2M-C')
                                 await message.channel.send(M2M2[y-1])
 
 
                             ##/// LEARNING
-                            if random.randint(0,3)==2: #// LEARN TEXT
+                            if rand(0,5)==2: #// LEARN TEXT
                                 store = message.content+'\n'
                                 words = message.content.split(" ")
                                 HAS = PMath = PEng = PSci = 0
-                                Globalize()
-                                print(f"{MATHl}\n{ENGr}\n{SCIr}")
+                                MATHl, ENGl, SCIl = await LoadNow('MathIn'), await LoadNow('EngIn'), await LoadNow('SciIn')
+                                print(f"{MATHl}\n{ENGl}\n{SCIl}")
                                 for word in words:
                                     for math in MATHl:
                                         if word in math:
-                                            LearnNow('MathOut', 'a', message.content, 'MATHED')
+                                            await LearnNow('MathOut', 'a', message.content, 'MATHED')
                                             PMath += 1
                                             HAS = 1
                                 for word in words:
                                     for text in ENGl:
                                         if word in text:
-                                            LearnNow('EngOut', 'a', message.content, 'TYPED')
+                                            await LearnNow('EngOut', 'a', message.content, 'TYPED')
                                             PEng += 1
                                             HAS = 1
                                 for word in words:
                                     for chem in SCIl:
                                         if word in chem:
-                                            LearnNow('SciOut', 'a', message.content, 'EXPIRIMENTED')
+                                            await LearnNow('SciOut', 'a', message.content, 'EXPIRIMENTED')
                                             PSci += 1
                                             HAS = 1
-                                Globalize()
+                                MATHr = await LoadNow('MathOut')
+                                ENGr = await LoadNow('EngOut')
+                                SCIr = await LoadNow('SciOut')
                                 if PMath > PEng and PMath > PSci:
                                     await message.channel.send('`]This is mathy... i think :D`')
                                     await message.channel.send(random.choice(MATHr))
@@ -207,26 +184,28 @@ async def on_message(message):
                                 elif PSci > PMath and PSci > PEng:
                                     await message.channel.send('`]This is sciency... i hypothesise O.O`')
                                     await message.channel.send(random.choice(SCIr))
-                                    if message.content and store not in AI:
-                                        if HAS == 0:
-                                            for word in words:
-                                                await message.channel.send('```]WHAT SUBJECT DOES THE FOLLOWING WORD BELONG TO?\n1] MATHS ">1"\n2] LANGUAGE ">2"\n3] SCIENCE ">3"\n4] GENERIC - anything else\n \nPlease wait 2 seconds before responding :D```'+word+'\n\_\_\_\_\_\_\_\_\_')
-                                                time.sleep(2)
-
-                                                user = await bot.wait_for('message')
-                                                await message.channel.send('`]THX FAM!`')
-                                                if ">1" in user.content:
-                                                    LearnNow('MathIn', 'a', word, 'MATHED')
-                                                    await message.channel.send('`]oOoOh Maths... :D`')
-                                                elif ">2" in user.content:
-                                                    LearnNow('EngIn', 'a', word, 'TYPED')
-                                                    await message.channel.send('`]awww Languages... ;[`')
-                                                elif ">3" in user.content:
-                                                    LearnNow('SciIn', 'a', word, 'EXPIRIMENTED')
-                                                    await message.channel.send('`]I will yote this and observe what happens... O.O`')
-                                                elif word == words[len(words)-1]:
-                                                    LearnNow('PrismaticText', 'a', word, 'ADDED')
-                                                    await message.channel.send('`]LEARN`')
+                                if message.content and store not in AI:
+                                    if HAS == 0:
+                                        for word in words:
+                                            await message.channel.send(f'```diff\n+]WHAT SUBJECT DOES THE FOLLOWING WORD BELONG TO?\n-] MATHS ">1"\n-] LANGUAGE ">2"\n-] SCIENCE ">3"\n-] GENERIC - anything else\n \n=]Please a moment before responding :D```\n{word}\n\_\_\_\_\_\_\_\_\_')
+                                            def check(m):
+                                                return m.content == 'hello' and m.channel == channel
+                                            await client.wait_for('message', check=check)
+                                            await user.channel.purge(limit=1)
+                                            await user.channel.edit(content='`]THX FAM`')
+                                            await user.channel.send('`]THX FAM!`')
+                                            if ">1" in user.content:
+                                                await LearnNow('MathIn', 'a', word, 'MATHED')
+                                                await message.channel.send('`]oOoOh Maths... :D`')
+                                            elif ">2" in user.content:
+                                                await LearnNow('EngIn', 'a', word, 'TYPED')
+                                                await message.channel.send('`]awww Languages... ;[`')
+                                            elif ">3" in user.content:
+                                                await LearnNow('SciIn', 'a', word, 'EXPIRIMENTED')
+                                                await message.channel.send('`]I will yote this and observe what happens... O.O`')
+                                            elif word == words[len(words)-1]:
+                                                await LearnNow('PrismaticText', 'a', message.content, 'ADDED')
+                                                await message.channel.send('`]LEARN`')
 
 
                             ##///M2M WRITE
@@ -235,9 +214,9 @@ async def on_message(message):
                                     M2M1 = await mm1.readlines()
                                     if message.content not in M2M1:
                                         if message.content+"\n" not in M2M1:
-                                            LearnNow('PrismaticM2M-R', 'a', message.content, 'M2M1')
+                                            await LearnNow('PrismaticM2M-R', 'a', message.content, 'M2M1')
                                             await message.channel.send('`]M2M_1`')
-                                            LearnNow('PrismaticM2M-C', 'a', message.content, 'M2M2')
+                                            await LearnNow('PrismaticM2M-C', 'a', message.content, 'M2M2')
                                             await message.channel.send('`]M2M_2`')
 
                 else:
@@ -247,28 +226,57 @@ async def on_message(message):
 
 ##/// COMMANDS
 
-@bot.command()
+@bot.command(aliases=["help"])
 async def hlep(ctx):
     await ctx.send('''```md
 # !] PRIZ AI ;] [! COMMANDS LIST
- 
-0. ";]hlep"
->  Brings up this message :)
-0. ";]ping"
->  Shows the ping time :L
-0. ";]slots"
->  Slot machine :D
-0. ";]coin"
->  A virtual coin flip 0.0
-0. ";]git"
->  Shows the github/gitlab repo ;]
-0. ";]rng {x} {y}"
->  Prints a random number from [x] to [y]
-0. ";]clr {x}"
->  Clears [x] messages XD
-0. ";]usrinfo"
+
+] ";]hlep"
+> Brings up this message :)
+] ";]ping"
+> Shows the ping time :L
+] ";]slots"
+> Slot machine :D
+] ";]coin"
+> A virtual coin flip 0.0
+] ";]git"
+> Shows the github/gitlab repo ;]
+] ";]rng {x} {y}"
+> Prints a random number from [x] to [y]
+] ";]clr {x}"
+> Clears [x] messages XD
+] ";]usrinfo"
 >  Shows your user info 0.0
+] ";]dnd"
+> Roles all dice from Dragons and Dungeons!
+] ";]info"
+> Shows additional info
+
+# To see mod commands, use ";]hlepmod"
+# To have a conversation, use "]{your text here}"
 ```''')
+
+@bot.command(aliases=["helpmod"])
+async def hlepmod(ctx):
+    await ctx.send('''```md
+# !] PRIZ AI ;] [! MOD STUFF
+
+] ";]hlepmod"
+> Brings up this message :)
+] ";]ban {user} {delete days} {reason}"
+> Bans a {user} and removes messages from {delete days} ago for a {reason}
+] ";]kick {user}"
+> Kicks a {user} from the server
+] ";]clr {int}"
+> Deletes a {int} amount of messages
+
+# To see user commands, use ";]hlep"
+# To have a conversation, use "]{your text here}"
+```''')
+
+@bot.command()
+async def info(ctx):
+    await ctx.send('```ini\n# PRIZ AI\nAn RNG based AI that compares strings... literally\nOriginally written for the TI84+CSE and adapted into a way better Discord Bot!```')
 
 @bot.command()
 async def ping(ctx):
@@ -289,26 +297,35 @@ async def slots(ctx):
 
 @bot.command()
 async def coin(ctx, num: int):
-    if num > 498:
-        await ctx.send('```]Due to Discord limitations, MAX = 498... sry :C```')
-        num = 498
-    tcnt = hcnt = 0
+    tcnt = y = hcnt = 0
     outp = ""
+    if num > 5000:
+        await ctx.send('```]To prevent spam, MAX = 5000```')
+        num = 5000
+    print('!] COIN FLIP')
     for x in range(num):
-        if random.randint(0,1) == 1:
+        if rand(0,1) == 1:
             tcnt+=1
             outp = outp+"[T] "
         else:
             hcnt+=1
             outp = outp+"[H] "
-    await ctx.send(f'```{outp}```')
+        if y == 497:
+            await ctx.send(f'```{outp}```')
+            outp = ""
+            y = 0
+        else: y+=1
+    if y != 0: await ctx.send(f'```{outp}```')
     await ctx.send(f'```]HEAD // {hcnt}\n]TAIL // {tcnt}```')
-    print('!] COIN FLIP')
 
-##///POWEROFF MESSAGE
 @bot.command()
-async def poweroff(ctx):
-    await ctx.send('```diff\n-] NOW OFFLINE\n-] RIP IN PEACE, M8```')
+@commands.is_owner()
+async def pwr(ctx):
+    await ctx.send('```md\n#]SEE YA PEEPS```')
+    channel =  bot.get_channel(556247032701124650)
+    await channel.purge(limit=1)
+    await bot.logout()
+    await bot.login()
 
 @bot.command()
 async def git(ctx):
@@ -316,16 +333,21 @@ async def git(ctx):
     print('!] GITHUB/GITLAB')
 
 @bot.command()
+@has_permissions(manage_messages=True)
 async def clr(ctx, arg: int):
     await ctx.channel.purge(limit=arg+1)
     print(f'CLEAR [{arg}]')
 
 @bot.command()
-async def rng(ctx, rngl, rngh):
-    rngh = int(rngh)
-    rngl = int(rngl)
+@commands.is_owner()
+async def clr0(ctx, arg: int):
+    await ctx.channel.purge(limit=arg+1)
+    print(f'CLEAR [{arg}]')
+
+@bot.command()
+async def rng(ctx, rngl: int, rngh: int):
     print(f'!] RNG BETWEEN {rngl} & {rngh}')
-    await ctx.send(f'```diff\n-] RNG BETWEEN {rngl} & {rngh}\n+] {random.randint(rngl,rngh)}```')
+    await ctx.send(f'```diff\n-] RNG BETWEEN {rngl} & {rngh}\n+] {rand(rngl,rngh)}```')
 
 @bot.command()
 @has_permissions(manage_roles=True, ban_members=True)
@@ -336,30 +358,93 @@ async def ban(ctx, members: commands.Greedy[discord.Member],
         await member.ban(delete_message_days=delete_days, reason=reason)
 
 @bot.command()
-async def usrinfo(ctx): #DOESNT WORK
-    await ctx.send(f'```USER // {user.name}\nNICK // {user.display_name}\nJOINED // {member.joined_at}\nCREATED // {user.created_at}\nDISCRIM // {user.discriminator}\nUSER ID // {user.id}```')
-    await ctx.send(f'```ROLES // {[role.name.replace("@", "") for role in user.roles]}\nSTATUS // {user.status}\nUSER PFP // {user.avatar_url}```')
+async def usrinfo(ctx):
+    perms = '\n'.join(perm for perm, value in ctx.author.guild_permissions if value)
+    await ctx.send(f'```USER // {ctx.author.name}\nNICK // {ctx.author.display_name}\nJOINED // {ctx.author.joined_at}\nCREATED // {ctx.author.created_at}\nDISCRIM // {ctx.author.discriminator}\n```')
+    await ctx.send(f'```PERMS // {perms}\nSTATUS // {user.status}\nUSER PFP // {user.avatar_url}```')
 
 @bot.command()
 @has_permissions(manage_roles=True, kick_members=True)
 async def kick(self, *members: discord.Member):
-    for member in members:
-        await self.bot.kick(member)
+    for member in members: await self.bot.kick(member)
+
+@bot.command()
+@commands.has_permissions(manage_messages=True)
+async def clrin(ctx, int1: int, Int2: int):
+    clrh = min(int1, int2)
+    clrl = max(int1, int2)
+    await ctx.channel.purge(limit=2000, before=clrl, after=clrh)
+
+#@bot.command()
+#@commands.has_permissions(manage_messages=True)
+#async def
+
+@bot.command()
+@commands.is_owner()
+async def clrin0(ctx, int1: int, Int2: int):
+    clrh = min(int1, int2)
+    clrl = max(int1, int2)
+    await ctx.channel.purge(limit=2000, before=clrl, after=clrh)
+
+@bot.command()
+async def rngs(ctx, rngl: int, rngh: int, num: int):
+    if num > 2000:
+        await ctx.send('```]To prevent spam, MAX = 2000```')
+        num = 2000
+    send = ""
+    temp = 0
+    ttl = []
+    await ctx.send(f'```diff\n-] RNG BETWEEN {rngl} & {rngh}```')
+    print(f'!] RNG BETWEEN {rngl} & {rngh}')
+    for x in range(num):
+        temp = random.randint(rngl,rngh)
+        if len(f'{send} {temp} ')<=1994:
+            send += f'{temp} '
+            ttl.append(temp)
+        else:
+            await ctx.send(f'```{send}```')
+            send = ""
+    if len(send) != 0: await ctx.send(f'```{send}```')
+    await ctx.send(f'```CNT // {len(ttl)}\nAVG // {sum(ttl)/len(ttl)}```')
+
+@bot.command()
+async def dnd(ctx):
+    await ctx.send(f"```md\n# DND!\nD4 ~ {rand(1,4)}\nD6 ~ {rand(1,6)}\nD8 ~ {rand(1,8)}\nD10 ~ {rand(1,10)}\nD12 ~ {rand(1,12)}\nD20 ~ {rand(1,20)}\n```")
+def check(m):
+            return m.content == 'hello' and m.channel == channel
+@bot.command()
+async def os(ctx):
+    appinfo = await application_info
+    await ctx.send(appinfo)
 
 ##/// ERRORS
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.BadArgument):
-        await ctx.send('```]SYNTAX ERROR```')
+        await ctx.send('```diff\n-]ERROR 400\n=]BAD ARGUMENT```')
     if isinstance(error, commands.CommandNotFound):
-        await ctx.send('```]NO SUCH COMMAND```')
+        await ctx.send('```diff\n-]ERROR 404\n=]COMMAND NOT FOUND```')
     if isinstance(error, commands.BotMissingPermissions):
-        await ctx.send('```]BOT PERMS ERROR```')
-    if isinstance(error, MissingPermissions):
-        await ctx.send('```]USER PERMS ERROR```')
+        await ctx.send('```diff\n-]ERROR 503\n=]BOT FORBIDDEN```')
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send('```diff\n-]ERROR 403\n=]USER FORBIDDEN```')
+    if isinstance(error, commands.ConversionError):
+        await ctx.send('```diff\n-]ERROR 503\n=]UNAVAILABLE```')
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('```diff\n-]ERROR 416\n=]MISSING ARGS```')
+    if isinstance(error, commands.ArgumentParsingError):
+        await ctx.send('```diff\n-]ERROR 418\n=]IM A TEAPOT```')
+    if isinstance(error, commands.TooManyArguments):
+        await ctx.send('```diff\n-]ERROR 429\n=]TOO MANY ARGS```')
+    if isinstance(error, commands.DisabledCommand):
+        await ctx.send('```diff\n-]ERROR 423\n=]LOCKED COMMAND```')
+    if isinstance(error, commands.NotOwner):
+        await ctx.send('```diff\n-]ERROR 401\n=]UNAUTHORIZED```')
+    if isinstance(error, commands.ExtensionError):
+        await ctx.send('```diff\n-]ERROR 424\n=]FAILED EXTENSION```')
 
 ##/// BOT SETTINGS
-key = 'bot key goes here'
+key = ''
 bot.run(key)
 client.run(key)
 
