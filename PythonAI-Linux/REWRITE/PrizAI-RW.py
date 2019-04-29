@@ -119,7 +119,7 @@ async def on_guild_remove(guild):
 
 @bot.listen()
 async def on_command_error(ctx, error):
-    await PrizAI_CODE.on_command_error(ctx, error)
+    await ctx.send(f'```{PrizAI_CODE.on_command_error(ctx, error)}```')
 
 @bot.listen()
 async def on_error(ctx, error):
