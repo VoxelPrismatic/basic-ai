@@ -246,23 +246,23 @@ async def on_error(event, *args, **kwargs):
         await handler("EVENT FAILED", exception, event, None, None, *args, **kwargs)
 
 async def on_command_error(ctx, error):
-    if isinstance(error, commands.BadArgument): return "-]ERROR 400\n=]BAD ARGUMENT"
-    elif isinstance(error, commands.BotMissingPermissions): return "-]ERROR 503\n=]BOT FORBIDDEN"
-    elif isinstance(error, commands.MissingPermissions): return "-]ERROR 403\n=]USER FORBIDDEN"
-    elif isinstance(error, commands.ConversionError): return "-]ERROR 503\n=]UNAVAILABLE"
-    elif isinstance(error, commands.MissingRequiredArgument): return "-]ERROR 416\n=]MISSING ARGS"
-    elif isinstance(error, commands.ArgumentParsingError): return "-]ERROR 418\n=]IM A TEAPOT"
-    elif isinstance(error, commands.TooManyArguments): return "-]ERROR 429\n=]TOO MANY ARGS"
-    elif isinstance(error, commands.DisabledCommand): return "-]ERROR 423\n=]LOCKED COMMAND"
-    elif isinstance(error, commands.NotOwner): return "-]ERROR 401\n=]UNAUTHORIZED"
-    elif isinstance(error, commands.ExtensionError): return "-]ERROR 424\n=]FAILED EXTENSION"
+    if isinstance(error, commands.BadArgument): return "diff\n-]ERROR 400\n=]BAD ARGUMENT"
+    elif isinstance(error, commands.BotMissingPermissions): return "diff\n-]ERROR 503\n=]BOT FORBIDDEN"
+    elif isinstance(error, commands.MissingPermissions): return "diff\n-]ERROR 403\n=]USER FORBIDDEN"
+    elif isinstance(error, commands.ConversionError): return "diff\n-]ERROR 503\n=]UNAVAILABLE"
+    elif isinstance(error, commands.MissingRequiredArgument): return "diff\n-]ERROR 416\n=]MISSING ARGS"
+    elif isinstance(error, commands.ArgumentParsingError): return "diff\n-]ERROR 418\n=]IM A TEAPOT"
+    elif isinstance(error, commands.TooManyArguments): return "diff\n-]ERROR 429\n=]TOO MANY ARGS"
+    elif isinstance(error, commands.DisabledCommand): return "diff\n-]ERROR 423\n=]LOCKED COMMAND"
+    elif isinstance(error, commands.NotOwner): return "diff\n-]ERROR 401\n=]UNAUTHORIZED"
+    elif isinstance(error, commands.ExtensionError): return "diff\n-]ERROR 424\n=]FAILED EXTENSION"
     else:
         await handler("COMMAND FAILURE", error.original, ctx=ctx)
-        return """```md
+        return """md
 #] GG MATE, YOU FUCKED IT UP
 > But that's okay, cuz you breaking shit
 > is how I can get better at preventing
-> that from happening... :D```""")
+> that from happening... :D```"""
 
 async def handler(exception_type, exception, event=None, message=None, ctx = None, *args, **kwargs):
         if message is None and event is not None and hasattr(event, "message"): message = event.message
