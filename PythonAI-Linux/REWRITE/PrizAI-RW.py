@@ -106,11 +106,11 @@ GG! !] PRIZ AI ;] [! // v{discord.__version__}// RESTART - CTRL Z, [up], [enter]
 ##///---------------------///##
 
 @bot.listen()
-async def on_message(message):
+async def on_message(bot, message):
     await PrizAI_CODE.on_message(message)
 
 @bot.listen()
-async def on_guild_join(guild):
+async def on_guild_join(bot, guild):
     await PrizAI_CODE.on_guild_join(guild)
 
 @bot.listen()
@@ -118,11 +118,11 @@ async def on_guild_remove(guild):
     await PrizAI_CODE.on_guild_remove(guild)
 
 @bot.listen()
-async def on_command_error(ctx, error):
+async def on_command_error(bot, ctx, error):
     await ctx.send(f'```{PrizAI_CODE.on_command_error(ctx, error)}```')
 
 @bot.listen()
-async def on_error(ctx, error):
+async def on_error(bot, ctx, error):
     await PrizAI_CODE.on_error(event, *args, **kwargs)
 
 
