@@ -53,17 +53,17 @@ def loop(string, array):
             rtrn = True; break
     return rtrn
 
-async def log(head, text):
+async def log(bot, head, text):
     loggingchannel = bot.get_channel(569698278271090728)
     msgs = await loggingchannel.send(embed=embedify(f'''```md\n#] {head}!\n> {text}```'''))
     return msgs
 
-async def _io(TxT):
+async def _io(bot, TxT):
     msgs = await log("AI I/O", f'{TxT}')
     print(f']{TxT}')
     return msgs
 
-async def com(command):
+async def com(bot, command):
     msgs = await log("COMMAND USED", f'COMMAND // {command}')
     print(f']{command}')
     return msgs
@@ -83,23 +83,23 @@ async def ArraysLoad():
         ENGr = await eng2R.readlines()
         print('LOADED ARRAYS')
 
-async def LoadNow(FileName):
-    msgs = await _io('FORCE LOAD ARRAYS')
+async def LoadNow(bot, FileName):
+    msgs = await _io(bot, 'FORCE LOAD ARRAYS')
     try:
         async with aiofiles.open(FileName, mode='r') as shit: wtf = await shit.readlines()
         await msgs.add_reaction('👌')
     except: await _io('FAILURE')
     return wtf
 
-async def LearnNow(File, MD, TxT, addtext): ##/// Instant Access (in case)
-    msgs = await _io(f"{addtext} // {TxT}")
+async def LearnNow(bot, File, MD, TxT, addtext): ##/// Instant Access (in case)
+    msgs = await _io(bot, f"{addtext} // {TxT}")
     try:
         async with aiofiles.open(File, mode=MD) as CurrentText: await CurrentText.write(f'{TxT}\n')
         await msgs.add_reaction('👌')
     except: await _io('FAILURE')
 
-async def LEARNnSEND(File, MD, TxT, addtext, sendhere, sendthis):
-    msgs = await _io(f"{addtext} // {TxT}")
+async def LEARNnSEND(bot, File, MD, TxT, addtext, sendhere, sendthis):
+    msgs = await _io(bot, f"{addtext} // {TxT}")
     try:
         async with aiofiles.open(File, mode=MD) as CurrentText: await CurrentText.write(f'{TxT}\n')
         await msgs.add_reaction('👌')
@@ -107,8 +107,8 @@ async def LEARNnSEND(File, MD, TxT, addtext, sendhere, sendthis):
 
 async def SEND2(chnl, text1, text2): await chnl.send(text1); await chnl.send(text2)
 
-async def exc(ctx, code: int):
-    await log('EXCEPTION!',f'TYPE // {code}\n> OCCURED IN // {ctx.channel}\n> 1] BadReq // 2] AllForbid // 3] 404')
+async def exc(bot, ctx, code: int):
+    await log(bot, 'EXCEPTION!',f'TYPE // {code}\n> OCCURED IN // {ctx.channel}\n> 1] BadReq // 2] AllForbid // 3] 404')
     if code == 1: await ctx.send('```diff\n-]ERROR 400\n=]BAD REQUEST```')
     elif code == 2: await ctx.send('```diff\n-]ERROR 403\n=]ALL FORBIDDEN```')
     elif code == 3: await ctx.send('```diff\n-]ERROR 404\n=]ALL NOT FOUND```')
@@ -117,7 +117,7 @@ async def exc(ctx, code: int):
 ##///     THE AI BITS     ///##
 ##///---------------------///##
 
-async def on_message(message):
+async def on_message(bot, message):
     if message.author ==  bot.user: return
     else:
         if message.content == "f":
@@ -142,7 +142,7 @@ async def on_message(message):
                     message.content = message.content[:200]
                 if "https" not in message.content:
                         LOOP = 1
-                        AI = await LoadNow('PrismaticText')
+                        AI = await LoadNow(bot, 'PrismaticText')
                         for MSG in AI:
                             print(MSG)
                             if message.content in MSG and message.content != MSG and message.content+"\n" != MSG:
@@ -153,18 +153,18 @@ async def on_message(message):
                         #//M2M READ
                         if LOOP==1:
                             y = 0
-                            M2M1 = await LoadNow('PrismaticM2M-R')
+                            M2M1 = await LoadNow(bot, 'PrismaticM2M-R')
                             for x in range(len(M2M1)-1):
                                 if message.content in M2M1[x]: y = x; break
                             if y == 0:
                                 print(message.content,'[/] M2M1')
-                                AI = await LoadNow('PrismaticText')
+                                AI = await LoadNow(bot, 'PrismaticText')
                                 print(AI)
                                 OUT = random.choice(AI)
                                 await message.channel.send(OUT)
                                 print(OUT)
                             else:
-                                M2M2 = await LoadNow('PrismaticM2M-C')
+                                M2M2 = await LoadNow(bot, 'PrismaticM2M-C')
                                 await message.channel.send(M2M2[y-1])
 
                             ##/// LEARNING
@@ -173,22 +173,22 @@ async def on_message(message):
                                 print(message.content)
                                 words = message.content.split(" ")
                                 HAS = PMath = PEng = PSci = 0
-                                MATHl = await LoadNow('MathIn')
-                                ENGl = await LoadNow('EngIn')
-                                SCIl = await LoadNow('SciIn')
-                                MATHr = await LoadNow('MathOut')
-                                ENGr = await LoadNow('EngOut')
-                                SCIr = await LoadNow('SciOut')
+                                MATHl = await LoadNow(bot, 'MathIn')
+                                ENGl = await LoadNow(bot, 'EngIn')
+                                SCIl = await LoadNow(bot, 'SciIn')
+                                MATHr = await LoadNow(bot, 'MathOut')
+                                ENGr = await LoadNow(bot, 'EngOut')
+                                SCIr = await LoadNow(bot, 'SciOut')
                                 print(f"{MATHl}\n{ENGl}\n{SCIl}")
                                 for word in words:
                                     if loop(word, MATHl):
-                                        await LearnNow('MathOut', 'a', message.content, 'MATHED')
+                                        await LearnNow(bot, 'MathOut', 'a', message.content, 'MATHED')
                                         PMath += 1; HAS = 1
                                     if loop(word, ENGl):
-                                        await LearnNow('EngOut', 'a', message.content, 'TYPED')
+                                        await LearnNow(bot, 'EngOut', 'a', message.content, 'TYPED')
                                         PEng += 1; HAS = 1
                                     if loop(word, SCIl):
-                                        await LearnNow('SciOut', 'a', message.content, 'EXPIRIMENTED')
+                                        await LearnNow(bot, 'SciOut', 'a', message.content, 'EXPIRIMENTED')
                                         PSci += 1; HAS = 1
                                 if PMath > PEng and PMath > PSci:
                                     await SEND2(message.channel, '`]This is mathy... i think :D`', random.choice(MATHr))
@@ -212,19 +212,19 @@ async def on_message(message):
                                         await user.channel.purge(limit=1)
                                         await MSG.edit(content="`]THX FAM`")
                                         if ">1" in user.content:
-                                            await LEARNnSEND('MathIn', 'a', word, 'MATHED', user.channel,'`]oOoOh Maths... :D`')
+                                            await LEARNnSEND(bot, 'MathIn', 'a', word, 'MATHED', user.channel,'`]oOoOh Maths... :D`')
                                         elif ">2" in user.content:
-                                            await LEARNnSEND('EngIn', 'a', word, 'TYPED', user.channel, '`]awww Languages... ;[`')
+                                            await LEARNnSEND(bot, 'EngIn', 'a', word, 'TYPED', user.channel, '`]awww Languages... ;[`')
                                         elif ">3" in user.content:
-                                            await LEARNnSEND('SciIn', 'a', word, 'EXPIRIMENTED', user.channel, '`]I will yote this and observe what happens... O.O`')
-                                        elif word == words[len(words)]: await LEARNnSEND('PrismaticText', 'a', message.content, 'ADDED', user.channel, '`]LEARN`')
+                                            await LEARNnSEND(bot, 'SciIn', 'a', word, 'EXPIRIMENTED', user.channel, '`]I will yote this and observe what happens... O.O`')
+                                        elif word == words[len(words)]: await LEARNnSEND(bot, 'PrismaticText', 'a', message.content, 'ADDED', user.channel, '`]LEARN`')
 
                             ##///M2M WRITE
                             if random.randint(0,8)==8: #// M2M WRITE
-                                M2M1 = await LoadNow('PrismaticM2M-R')
+                                M2M1 = await LoadNow(bot, 'PrismaticM2M-R')
                                 if message.content not in M2M1 and message.content+"\n" not in M2M1:
-                                    await LEARNnSEND('PrismaticM2M-R', 'a', message.content, 'M2M1', message.channel, '`]M2M_1`')
-                                    await LEARNnSEND('PrismaticM2M-C', 'a', message.content, 'M2M2', message.channel, '`]M2M_2`')
+                                    await LEARNnSEND(bot, 'PrismaticM2M-R', 'a', message.content, 'M2M1', message.channel, '`]M2M_1`')
+                                    await LEARNnSEND(bot, 'PrismaticM2M-C', 'a', message.content, 'M2M2', message.channel, '`]M2M_2`')
 
                 else: await message.channel.send('`]DONT SEND LINKS`')
             else: await message.channel.send('`]WATCH YOUR LANGUAGE`')
@@ -233,38 +233,50 @@ async def on_message(message):
 ##///     EVENT CALLS     ///##
 ##///---------------------///##
 
-async def on_guild_join(guild): await log("GUILD JOIN", f"SERVER // {guild}")
-async def on_guild_remove(guild): await log("GUILD LEFT", f"SERVER // {guild}")
+async def on_guild_join(bot, guild): await log(bot, "GUILD JOIN", f"SERVER // {guild}")
+async def on_guild_remove(guild): await log(bot, "GUILD LEFT", f"SERVER // {guild}")
 
 ##///---------------------///##
 ##///     ERROR CALLS     ///##
 ##///---------------------///##
 
-async def on_error(event, *args, **kwargs):
-    async def on_error(event, *args, **kwargs):
+async def on_error(bot, event, *args, **kwargs):
+    async def on_error(bot, event, *args, **kwargs):
         t, exception, info = sys.exc_info()
-        await handler("EVENT FAILED", exception, event, None, None, *args, **kwargs)
+        await handler(bot, "EVENT FAILED", exception, event, None, None, *args, **kwargs)
 
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.BadArgument): return "diff\n-]ERROR 400\n=]BAD ARGUMENT"
-    elif isinstance(error, commands.BotMissingPermissions): return "diff\n-]ERROR 503\n=]BOT FORBIDDEN"
-    elif isinstance(error, commands.MissingPermissions): return "diff\n-]ERROR 403\n=]USER FORBIDDEN"
-    elif isinstance(error, commands.ConversionError): return "diff\n-]ERROR 503\n=]UNAVAILABLE"
-    elif isinstance(error, commands.MissingRequiredArgument): return "diff\n-]ERROR 416\n=]MISSING ARGS"
-    elif isinstance(error, commands.ArgumentParsingError): return "diff\n-]ERROR 418\n=]IM A TEAPOT"
-    elif isinstance(error, commands.TooManyArguments): return "diff\n-]ERROR 429\n=]TOO MANY ARGS"
-    elif isinstance(error, commands.DisabledCommand): return "diff\n-]ERROR 423\n=]LOCKED COMMAND"
-    elif isinstance(error, commands.NotOwner): return "diff\n-]ERROR 401\n=]UNAUTHORIZED"
-    elif isinstance(error, commands.ExtensionError): return "diff\n-]ERROR 424\n=]FAILED EXTENSION"
+async def on_command_error(bot, ctx, error):
+    if isinstance(error, commands.BadArgument):
+        await ctx.send('```diff\n-]ERROR 400\n=]BAD ARGUMENT```')
+    elif isinstance(error, commands.CommandNotFound):
+        await ctx.message.add_reaction('🇫')
+    elif isinstance(error, commands.BotMissingPermissions):
+        await ctx.send('```diff\n-]ERROR 503\n=]BOT FORBIDDEN```')
+    elif isinstance(error, commands.MissingPermissions):
+        await ctx.send('```diff\n-]ERROR 403\n=]USER FORBIDDEN```')
+    elif isinstance(error, commands.ConversionError):
+        await ctx.send('```diff\n-]ERROR 503\n=]UNAVAILABLE```')
+    elif isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('```diff\n-]ERROR 416\n=]MISSING ARGS```')
+    elif isinstance(error, commands.ArgumentParsingError):
+        await ctx.send('```diff\n-]ERROR 418\n=]IM A TEAPOT```')
+    elif isinstance(error, commands.TooManyArguments):
+        await ctx.send('```diff\n-]ERROR 429\n=]TOO MANY ARGS```')
+    elif isinstance(error, commands.DisabledCommand):
+        await ctx.send('```diff\n-]ERROR 423\n=]LOCKED COMMAND```')
+    elif isinstance(error, commands.NotOwner):
+        await ctx.send('```diff\n-]ERROR 401\n=]UNAUTHORIZED```')
+    elif isinstance(error, commands.ExtensionError):
+        await ctx.send('```diff\n-]ERROR 424\n=]FAILED EXTENSION```')
     else:
-        await handler("COMMAND FAILURE", error.original, ctx=ctx)
-        return """md
+        await handler(bot, "COMMAND FAILURE", error.original, ctx=ctx)
+        await ctx.send("""```md
 #] GG MATE, YOU FUCKED IT UP
 > But that's okay, cuz you breaking shit
 > is how I can get better at preventing
-> that from happening... :D```"""
+> that from happening... :D```""")
 
-async def handler(exception_type, exception, event=None, message=None, ctx = None, *args, **kwargs):
+async def handler(bot, exception_type, exception, event=None, message=None, ctx = None, *args, **kwargs):
         if message is None and event is not None and hasattr(event, "message"): message = event.message
         if message is None and ctx is not None: message = ctx.message
         kwarg_info = arg_info = ""
@@ -273,7 +285,7 @@ async def handler(exception_type, exception, event=None, message=None, ctx = Non
         for name, arg in kwargs.items(): kwarg_info += "{}: {}\n".format(name, extract_info(arg))
         if kwarg_info == "": kwarg_info = "No keyword arguments"
         try:
-            await log("GG MATE, SOMEBODY FUCKED IT ALL UP!",f"""TYPE // {exception_type}
+            await log(bot, "GG MATE, SOMEBODY FUCKED IT ALL UP!",f"""TYPE // {exception_type}
 #>>>>>>>> ALL  INFO <<<<<<<<#
 #//////// EXCEPTION ////////#
 {str(exception)} [{type(exception)})]
@@ -301,4 +313,4 @@ CHANNEL // {'Private Message' if isinstance(ctx.channel, PrivateChannel) else f"
 ///]  {extract_info(message)}  [///
 """)
         except Exception as exc:
-            await log("SOMETHING IS SERIOUSLY FUCKED UP", f"ERROR // {exc}")
+            await log(bot, "SOMETHING IS SERIOUSLY FUCKED UP", f"ERROR // {exc}")
