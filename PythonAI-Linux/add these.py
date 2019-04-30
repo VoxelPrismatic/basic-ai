@@ -4,18 +4,6 @@ async def lawsin(typ: int, var1: decimal, var2: decimal, var3: decimal)
     
     
 ##/// HELP COMMAND UPDATE
-left = '⏪'
-right = '⏩'
-def predicate(message, l, r):
-    def check(reaction, user):
-        if reaction.message.id != message.id or user == bot.user:
-            return False
-        if l and reaction.emoji == left: return True
-        if r and reaction.emoji == right: return True
-        return False
-    return check
-
-@bot.command(pass_context=True)
 async def help(ctx):
     result = 0
     def check(reaction, user): return user == ctx.author
